@@ -4,11 +4,16 @@ import os
 import hashlib
 
 app = Flask(__name__)
-CORS(app)  
+CORS(app)
 
 UPLOAD_FOLDER = "uploads"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+ALLOWED_EXTENSIONS = {'.exe'}
+
+def allowed_file(filename):
+    return os.path.splitext(filename)[1].lower() in ALLOWED_EXTENSIONS
 
 def calculate_hashes(file_path):
     md5 = hashlib.md5()
@@ -32,6 +37,9 @@ def upload_file():
     file = request.files['file']
     if file.filename == '':
         return jsonify({"error": "Empty file name"}), 400
+
+    if not allowed_file(file.filename):
+        return jsonify({"error": "Only .exe files are allowed"}), 400
 
     filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
     file.save(filepath)
