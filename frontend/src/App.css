@@ -1,66 +1,97 @@
 body {
   margin: 0;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f5f7fa;
-  color: #333;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #0f0f0f;
+  color: #f0f0f0;
 }
 
 .App {
-  max-width: 800px;
-  margin: 40px auto;
-  padding: 20px;
-  background: #ffffff;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   text-align: center;
 }
 
-h1 {
-  color: #294a63;
-  margin-bottom: 30px;
+.app-header {
+  background-color: #1a1a2e;
+  padding: 1.5rem 2rem;
+  border-bottom: 2px solid #00e67640;
 }
 
-.file-upload {
-  margin-bottom: 20px;
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
-input[type="file"] {
-  padding: 10px;
-  border: 2px dashed #aaa;
+.logo {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
   border-radius: 8px;
-  background-color: #fafafa;
-  width: 100%;
-  margin-bottom: 10px;
-  cursor: pointer;
+  border: 1px solid #00e676;
+  background-color: #121212;
 }
 
-button {
-  background-color: #2c82c9;
-  color: white;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 8px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+.app-header h1 {
+  margin: 0;
+  font-size: 2.2rem;
+  color: #00e676;
 }
 
-button:hover {
-  background-color: #1f6eb1;
+.tagline {
+  margin: 0;
+  color: #bbbbbb;
+  font-size: 0.95rem;
+}
+
+.app-main {
+  flex: 1;
+  padding: 2rem 1rem;
+}
+
+.loading {
+  margin-top: 1rem;
+  font-style: italic;
+  color: #ffeb3b;
 }
 
 .result {
-  margin-top: 30px;
+  margin-top: 2rem;
+  background-color: #1e1e2f;
+  padding: 1.5rem;
+  border-radius: 10px;
+  max-width: 650px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 0 10px #00e67660;
   text-align: left;
-  background: #f9f9f9;
-  padding: 20px;
-  border-radius: 8px;
-  overflow-x: auto;
-  font-family: monospace;
-  font-size: 14px;
 }
 
-pre {
-  white-space: pre-wrap;
-  word-wrap: break-word;
+.result h3 {
+  color: #00e676;
+}
+
+.result pre {
+  background-color: #2b2b3a;
+  padding: 1rem;
+  border-radius: 6px;
+  color: #f8f8f8;
+  overflow-x: auto;
+}
+
+.app-footer {
+  background-color: #1a1a2e;
+  padding: 1rem;
+  color: #888;
+  font-size: 0.9rem;
+  border-top: 2px solid #00e67640;
+}
+
+.footer-note {
+  font-size: 0.8rem;
+  color: #aaa;
+  margin-top: 0.3rem;
 }
