@@ -20,7 +20,7 @@ const FileUpload = ({ setAnalysisResult, setLoading }) => {
       setAnalysisResult(result);
     } catch (err) {
       console.error("Upload failed:", err);
-      alert("Error uploading file.");
+      alert("Error uploading file: " + (err.response?.data?.error || err.message));
     } finally {
       setLoading(false);
     }
