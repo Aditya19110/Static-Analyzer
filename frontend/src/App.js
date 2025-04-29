@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import FileUpload from "./components/FileUpload";
+import "./App.css";
 
-function App() {
+const App = () => {
+  const [analysisResult, setAnalysisResult] = useState(null);
+  const [loading, setLoading] = useState(false);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Static Malware Analyzer</h1>
+      <FileUpload setAnalysisResult={setAnalysisResult} setLoading={setLoading} />
+      
+      {loading && <p>Analyzing file, please wait...</p>}
+      
+      {analysisResult && (
+        <div className="result">
+          <h3>Analysis Result:</h3>
+          <pre>{JSON.stringify(analysisResult, null, 2)}</pre>
+        </div>
+      )}
     </div>
   );
-}
+};
 
 export default App;
