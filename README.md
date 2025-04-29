@@ -23,6 +23,7 @@ SilentScan/
 Install all dependencies with:
 ```bash
 pip install -r requirements.txt
+```
 
 ✅ Frontend (React)
 	•	Node.js (v16 or above)
@@ -31,18 +32,22 @@ pip install -r requirements.txt
 🔧 Getting Started
 
 1. Clone the Repository
+```bash
 git clone https://github.com/Aditya19110/Static-Analyzer.git
 cd Static-Analyzer
+```
 
 2. Start the Frontend
+```bash
 cd frontend
 npm install
 npm start
-
+```
 3. Start the Backend
+```bash
 cd backend
 pip install -r requirements.txt
 python app.py
-
+```
 
 Made with ❤️ by Aditya Kulkarni
