@@ -1,0 +1,97 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #0f0f0f;
+  color: #f0f0f0;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  text-align: center;
+}
+
+.app-header {
+  background-color: #1a1a2e;
+  padding: 1.5rem 2rem;
+  border-bottom: 2px solid #00e67640;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.logo {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  border-radius: 8px;
+  border: 1px solid #00e676;
+  background-color: #121212;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 2.2rem;
+  color: #00e676;
+}
+
+.tagline {
+  margin: 0;
+  color: #bbbbbb;
+  font-size: 0.95rem;
+}
+
+.app-main {
+  flex: 1;
+  padding: 2rem 1rem;
+}
+
+.loading {
+  margin-top: 1rem;
+  font-style: italic;
+  color: #ffeb3b;
+}
+
+.result {
+  margin-top: 2rem;
+  background-color: #1e1e2f;
+  padding: 1.5rem;
+  border-radius: 10px;
+  max-width: 650px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 0 10px #00e67660;
+  text-align: left;
+}
+
+.result h3 {
+  color: #00e676;
+}
+
+.result pre {
+  background-color: #2b2b3a;
+  padding: 1rem;
+  border-radius: 6px;
+  color: #f8f8f8;
+  overflow-x: auto;
+}
+
+.app-footer {
+  background-color: #1a1a2e;
+  padding: 1rem;
+  color: #888;
+  font-size: 0.9rem;
+  border-top: 2px solid #00e67640;
+}
+
+.footer-note {
+  font-size: 0.8rem;
+  color: #aaa;
+  margin-top: 0.3rem;
+}
