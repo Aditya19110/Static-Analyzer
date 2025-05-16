@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import FileUpload from "../components/FileUpload"; // Make sure the import path is correct
+import FileUpload from "../components/FileUpload";
+import AnalysisResult from "../components/AnalysisResult"; // ✅ Import this
 import "./App.css";
 
 const Home = () => {
@@ -21,15 +22,19 @@ const Home = () => {
       </header>
 
       <main className="app-main">
-        <FileUpload setAnalysisResult={setAnalysisResult} setLoading={setLoading} />
-        
+        {/* Only show upload if there's no result */}
+        {!analysisResult && (
+          <FileUpload
+            setAnalysisResult={setAnalysisResult}
+            setLoading={setLoading}
+          />
+        )}
+
         {loading && <p className="loading">Analyzing file, please wait...</p>}
 
-        {analysisResult && (
-          <div className="result">
-            <h3>Analysis Result:</h3>
-            <pre>{JSON.stringify(analysisResult, null, 2)}</pre>
-          </div>
+        {/* Show detailed result like VirusTotal */}
+        {analysisResult && !loading && (
+          <AnalysisResult result={analysisResult} />
         )}
       </main>
 

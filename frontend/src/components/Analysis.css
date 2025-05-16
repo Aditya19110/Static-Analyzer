@@ -1,0 +1,82 @@
+.analysis-container {
+  padding: 20px;
+  color: #e0e0e0;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #00ffcc;
+}
+
+.card {
+  background: #1e1e2f;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0, 255, 255, 0.1);
+}
+
+.stats-list {
+  list-style: none;
+  padding: 0;
+}
+
+.stats-list li {
+  margin: 8px 0;
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  margin-right: 10px;
+}
+
+.green { color: #4caf50; }
+.red { color: #f44336; }
+.yellow { color: #ff9800; }
+.gray { color: #9e9e9e; }
+
+.results-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+.results-table th,
+.results-table td {
+  border: 1px solid #333;
+  padding: 10px;
+  text-align: left;
+}
+
+.results-table thead {
+  background-color: #2d2d3a;
+}
+
+.clean { color: #4caf50; }
+.malicious { color: #f44336; font-weight: bold; }
+.suspicious { color: #ff9800; font-weight: bold; }
+
+.reupload-button {
+  background-color: #007bff; /* Bootstrap blue */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.reupload-button:hover {
+  background-color: #0056b3;
+  transform: scale(1.03);
+}
+
+.reupload-button:active {
+  transform: scale(0.97);
+}
