@@ -5,8 +5,8 @@ import os
 import hashlib
 import requests
 from dotenv import load_dotenv
+import pefile
 
-# Load .env file
 load_dotenv()
 
 app = Flask(__name__)
@@ -17,7 +17,6 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 ALLOWED_EXTENSIONS = {'.exe'}
-
 VIRUSTOTAL_API_KEY = os.getenv("VIRUSTOTAL_API_KEY")
 VT_API_URL = "https://www.virustotal.com/api/v3"
 
@@ -27,16 +26,50 @@ def allowed_file(filename):
 def calculate_hashes(file_path):
     md5 = hashlib.md5()
     sha1 = hashlib.sha1()
+    sha256 = hashlib.sha256()
 
     with open(file_path, "rb") as f:
         for chunk in iter(lambda: f.read(4096), b""):
             md5.update(chunk)
             sha1.update(chunk)
+            sha256.update(chunk)
 
     return {
         "md5": md5.hexdigest(),
-        "sha1": sha1.hexdigest()
+        "sha1": sha1.hexdigest(),
+        "sha256": sha256.hexdigest()
     }
+
+def get_pe_info(file_path):
+    pe = pefile.PE(file_path)
+    info = {
+        "entry_point": hex(pe.OPTIONAL_HEADER.AddressOfEntryPoint),
+        "image_base": hex(pe.OPTIONAL_HEADER.ImageBase),
+        "compile_time": pe.FILE_HEADER.TimeDateStamp
+    }
+    return info
+
+def get_sections_info(file_path):
+    pe = pefile.PE(file_path)
+    sections = []
+    for section in pe.sections:
+        sections.append({
+            "name": section.Name.decode(errors="ignore").strip("\x00"),
+            "virtual_size": hex(section.Misc_VirtualSize),
+            "raw_size": hex(section.SizeOfRawData),
+            "entropy": section.get_entropy()
+        })
+    return sections
+
+def get_imports(file_path):
+    pe = pefile.PE(file_path)
+    imports = []
+    if hasattr(pe, 'DIRECTORY_ENTRY_IMPORT'):
+        for entry in pe.DIRECTORY_ENTRY_IMPORT:
+            dll = entry.dll.decode()
+            funcs = [imp.name.decode() if imp.name else "None" for imp in entry.imports]
+            imports.append({"dll": dll, "functions": funcs})
+    return imports
 
 @app.route("/upload", methods=["POST"])
 def upload_file():
@@ -53,12 +86,21 @@ def upload_file():
     filepath = os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(file.filename))
     file.save(filepath)
 
-    result = calculate_hashes(filepath)
+    try:
+        result = calculate_hashes(filepath)
+        pe_info = get_pe_info(filepath)
+        sections = get_sections_info(filepath)
+        imports = get_imports(filepath)
 
-    return jsonify({
-        "filename": file.filename,
-        "hashes": result
-    })
+        return jsonify({
+            "filename": file.filename,
+            "hashes": result,
+            "pe_info": pe_info,
+            "sections": sections,
+            "imports": imports
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @app.route("/api/virustotal/upload", methods=["POST"])
 def upload_to_virustotal():
@@ -90,7 +132,6 @@ def get_analysis_result(analysis_id):
         return jsonify({"error": "Analysis fetch failed", "details": response.text}), 500
 
     return jsonify(response.json())
-
 
 if __name__ == "__main__":
     app.run(debug=True)
