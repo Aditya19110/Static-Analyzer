@@ -3,7 +3,7 @@ import { ShieldCheck, ShieldX, AlertTriangle, Loader2 } from "lucide-react";
 import "./Analysis.css";
 
 const AnalysisResult = ({ result }) => {
-  if (!result) return null;
+  if (!result) return <p className="loading-msg">No analysis result yet.</p>;
 
   const vtData = result.virustotal;
   const stats = vtData?.data?.attributes?.stats;
@@ -50,7 +50,7 @@ const AnalysisResult = ({ result }) => {
                   <td>{sec.name}</td>
                   <td>{sec.virtual_size}</td>
                   <td>{sec.raw_size}</td>
-                  <td>{sec.entropy.toFixed(2)}</td>
+                  <td>{sec.entropy ? sec.entropy.toFixed(2) : "N/A"}</td>
                 </tr>
               ))}
             </tbody>
@@ -75,6 +75,12 @@ const AnalysisResult = ({ result }) => {
       )}
 
       <h2 className="section-title">VirusTotal Analysis</h2>
+      {!vtData && (
+        <div className="card">
+          <p>VirusTotal scan not available.</p>
+        </div>
+      )}
+
       {stats && (
         <div className="card">
           <h4>VirusTotal Summary</h4>

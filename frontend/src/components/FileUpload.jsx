@@ -1,10 +1,40 @@
 import React, { useState } from "react";
+import "./FileUpload.css"; // Create this for styling
 
 const FileUpload = ({ setAnalysisResult, setLoading }) => {
   const [file, setFile] = useState(null);
+  const [dragActive, setDragActive] = useState(false);
+  const [progress, setProgress] = useState(0);
 
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+  const handleDrag = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (["dragenter", "dragover"].includes(e.type)) {
+      setDragActive(true);
+    } else if (e.type === "dragleave") {
+      setDragActive(false);
+    }
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(false);
+    const droppedFile = e.dataTransfer.files[0];
+    if (droppedFile && droppedFile.name.endsWith(".exe")) {
+      setFile(droppedFile);
+    } else {
+      alert("Only .exe files are allowed.");
+    }
+  };
+
+  const handleChange = (e) => {
+    const selected = e.target.files[0];
+    if (selected && selected.name.endsWith(".exe")) {
+      setFile(selected);
+    } else {
+      alert("Only .exe files are allowed.");
+    }
   };
 
   const handleUpload = async () => {
@@ -15,36 +45,49 @@ const FileUpload = ({ setAnalysisResult, setLoading }) => {
 
     try {
       setLoading(true);
+      setProgress(10);
 
       const formData = new FormData();
       formData.append("file", file);
 
-      // 🔗 1. Upload to backend to get hashes
-      const uploadRes = await fetch("https://static-analyzer-ps4i.onrender.com/upload", {
+      // 1️⃣ Upload for static analysis
+      const uploadRes = await fetch("https://static-analyzer-zh53.onrender.com/upload", {
         method: "POST",
         body: formData,
       });
       const result = await uploadRes.json();
 
-      // 🔗 2. Upload to VirusTotal via backend
-      const vtRes = await fetch("https://static-analyzer-ps4i.onrender.com/api/virustotal/upload", {
+      if (uploadRes.status !== 200 || result.error) {
+        throw new Error(result.error || "Static analysis failed");
+      }
+
+      setProgress(40);
+
+      // 2️⃣ Upload to VirusTotal
+      const vtRes = await fetch("https://static-analyzer-zh53.onrender.com/api/virustotal/upload", {
         method: "POST",
         body: formData,
       });
       const vtUpload = await vtRes.json();
 
-      const analysisId = vtUpload.data.id;
+      if (vtRes.status !== 200 || vtUpload.error) {
+        throw new Error(vtUpload.error || "VirusTotal upload failed");
+      }
 
-      // 3. Polling function for analysis result
+      const analysisId = vtUpload.data.id;
+      setProgress(60);
+
+      // 3️⃣ Polling function
       const pollResult = async () => {
         const analysisRes = await fetch(
-          `https://static-analyzer-ps4i.onrender.com/api/virustotal/analysis/${analysisId}`
+          `https://static-analyzer-zh53.onrender.com/api/virustotal/analysis/${analysisId}`
         );
         const analysisData = await analysisRes.json();
 
         if (analysisData.data?.attributes?.status !== "completed") {
-          setTimeout(pollResult, 3000); // Poll every 3 seconds
+          setTimeout(pollResult, 3000);
         } else {
+          setProgress(100);
           setAnalysisResult({
             ...result,
             virustotal: analysisData,
@@ -56,18 +99,35 @@ const FileUpload = ({ setAnalysisResult, setLoading }) => {
       pollResult();
     } catch (err) {
       console.error("Upload failed:", err);
-      alert(
-        "Error uploading or analyzing file: " +
-          (err.response?.data?.error || err.message)
-      );
+      alert("Error uploading or analyzing file: " + (err.message || "Unknown error"));
       setLoading(false);
+      setProgress(0);
     }
   };
 
   return (
-    <div className="file-upload">
-      <input type="file" accept=".exe" onChange={handleFileChange} />
+    <div
+      className={`file-upload-container ${dragActive ? "drag-active" : ""}`}
+      onDragEnter={handleDrag}
+      onDragOver={handleDrag}
+      onDragLeave={handleDrag}
+      onDrop={handleDrop}
+    >
+      <input
+        type="file"
+        accept=".exe"
+        onChange={handleChange}
+        className="file-input"
+      />
+      <p>Drag & Drop your <strong>.exe</strong> file here or click to browse.</p>
+      {file && <p className="file-selected">Selected File: {file.name}</p>}
       <button onClick={handleUpload}>Analyze File</button>
+
+      {progress > 0 && (
+        <div className="progress-bar">
+          <div className="progress-fill" style={{ width: `${progress}%` }}></div>
+        </div>
+      )}
     </div>
   );
 };

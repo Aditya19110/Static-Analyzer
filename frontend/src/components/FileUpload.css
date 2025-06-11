@@ -1,0 +1,44 @@
+.file-upload-container {
+  border: 2px dashed #888;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  transition: background 0.2s ease;
+  margin-bottom: 20px;
+}
+
+.file-upload-container.drag-active {
+  background-color: #e0f7fa;
+  border-color: #00acc1;
+}
+
+.file-input {
+  display: block;
+  margin: 10px auto;
+}
+
+.file-selected {
+  margin: 10px 0;
+  font-weight: bold;
+}
+
+button {
+  padding: 10px 20px;
+  margin-top: 10px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  background: #eee;
+  border-radius: 5px;
+  margin-top: 15px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #2196f3, #42a5f5);
+  width: 0%;
+  transition: width 0.4s ease;
+}
