@@ -12,7 +12,9 @@ const AnalysisResult = ({ result }) => {
   return (
     <div className="analysis-container">
       <h2 className="section-title">Malware Analysis</h2>
-      <button onClick={() => window.location.reload()} className="reupload-button">Re-Upload App</button>
+      <button onClick={() => window.location.reload()} className="reupload-button">
+        Re-Upload App
+      </button>
 
       {result.hashes && (
         <div className="card">
@@ -35,26 +37,28 @@ const AnalysisResult = ({ result }) => {
       {result.sections && (
         <div className="card">
           <h4>Section Info</h4>
-          <table className="results-table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Virtual Size</th>
-                <th>Raw Size</th>
-                <th>Entropy</th>
-              </tr>
-            </thead>
-            <tbody>
-              {result.sections.map((sec, i) => (
-                <tr key={i}>
-                  <td>{sec.name}</td>
-                  <td>{sec.virtual_size}</td>
-                  <td>{sec.raw_size}</td>
-                  <td>{sec.entropy ? sec.entropy.toFixed(2) : "N/A"}</td>
+          <div className="results-table-wrapper">
+            <table className="results-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Virtual Size</th>
+                  <th>Raw Size</th>
+                  <th>Entropy</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {result.sections.map((sec, i) => (
+                  <tr key={i}>
+                    <td>{sec.name}</td>
+                    <td>{sec.virtual_size}</td>
+                    <td>{sec.raw_size}</td>
+                    <td>{sec.entropy ? sec.entropy.toFixed(2) : "N/A"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
 
@@ -62,7 +66,7 @@ const AnalysisResult = ({ result }) => {
         <div className="card">
           <h4>Imported DLLs & Functions</h4>
           {result.imports.map((imp, i) => (
-            <div key={i}>
+            <div key={i} style={{ marginBottom: "12px" }}>
               <strong>{imp.dll}</strong>
               <ul>
                 {imp.functions.map((fn, j) => (
@@ -75,6 +79,7 @@ const AnalysisResult = ({ result }) => {
       )}
 
       <h2 className="section-title">VirusTotal Analysis</h2>
+
       {!vtData && (
         <div className="card">
           <p>VirusTotal scan not available.</p>
@@ -96,32 +101,36 @@ const AnalysisResult = ({ result }) => {
       {results && (
         <div className="card">
           <h4>Detailed Scan Results</h4>
-          <table className="results-table">
-            <thead>
-              <tr>
-                <th>Engine</th>
-                <th>Category</th>
-                <th>Result</th>
-              </tr>
-            </thead>
-            <tbody>
-              {Object.entries(results).map(([engine, details]) => (
-                <tr key={engine}>
-                  <td>{engine}</td>
-                  <td>{details.category}</td>
-                  <td className={
-                    details.result === null
-                      ? "clean"
-                      : details.result === "malicious"
-                      ? "malicious"
-                      : "suspicious"
-                  }>
-                    {details.result || "Clean"}
-                  </td>
+          <div className="results-table-wrapper">
+            <table className="results-table">
+              <thead>
+                <tr>
+                  <th>Engine</th>
+                  <th>Category</th>
+                  <th>Result</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {Object.entries(results).map(([engine, details]) => (
+                  <tr key={engine}>
+                    <td>{engine}</td>
+                    <td>{details.category}</td>
+                    <td
+                      className={
+                        details.result === null
+                          ? "clean"
+                          : details.result === "malicious"
+                          ? "malicious"
+                          : "suspicious"
+                      }
+                    >
+                      {details.result || "Clean"}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
     </div>

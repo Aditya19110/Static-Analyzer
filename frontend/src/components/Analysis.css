@@ -1,53 +1,54 @@
-/* Analysis.css */
-
 .analysis-container {
   max-width: 1000px;
   margin: 40px auto;
   padding: 20px;
-  color: #fff;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   animation: fadeInUp 0.8s ease-out;
+  color: #fff;
 }
 
 .section-title {
-  font-size: 1.8rem;
-  margin: 30px 0 10px;
+  font-size: 2rem;
+  margin: 40px 0 20px;
   text-align: center;
   color: #00e3ff;
 }
 
 .card {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(14px);
   border-radius: 15px;
-  padding: 20px;
-  margin: 20px 0;
-  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.2);
+  padding: 20px 25px;
+  margin-bottom: 30px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
 }
 
 .card h4 {
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   color: #00c6ff;
+  font-size: 1.2rem;
 }
 
 .results-table {
   width: 100%;
+  overflow-x: auto;
   border-collapse: collapse;
-  margin-top: 10px;
   font-size: 0.95rem;
 }
 
 .results-table th,
 .results-table td {
   border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-  padding: 8px;
+  padding: 10px 12px;
   text-align: left;
+  white-space: nowrap;
 }
 
 .results-table th {
   background: rgba(255, 255, 255, 0.1);
   color: #00e3ff;
+  font-weight: bold;
 }
 
 .results-table td.clean {
@@ -66,12 +67,14 @@
 .stats-list {
   list-style: none;
   padding: 0;
+  margin-top: 10px;
 }
 
 .stats-list li {
   display: flex;
   align-items: center;
-  margin: 5px 0;
+  margin: 6px 0;
+  font-size: 0.95rem;
 }
 
 .icon {
@@ -103,8 +106,8 @@
   padding: 10px 25px;
   border-radius: 30px;
   cursor: pointer;
-  float: right;
-  margin-bottom: 20px;
+  display: block;
+  margin: 0 auto 20px;
   transition: background 0.3s ease;
 }
 
@@ -114,8 +117,15 @@
 
 .loading-msg {
   text-align: center;
-  color: #bbb;
+  color: #ccc;
   font-style: italic;
+  margin-top: 40px;
+  font-size: 1.2rem;
+}
+
+/* Scrollable Table Container for Mobile */
+.results-table-wrapper {
+  overflow-x: auto;
 }
 
 /* Fade-in animation */
@@ -130,15 +140,19 @@
   }
 }
 
-/* Mobile responsiveness */
+/* Responsive */
 @media (max-width: 768px) {
-  .results-table th, .results-table td {
-    font-size: 0.8rem;
+  .analysis-container {
+    padding: 10px;
+  }
+
+  .results-table th,
+  .results-table td {
+    font-size: 0.85rem;
+    padding: 8px 10px;
   }
 
   .reupload-button {
-    float: none;
     width: 100%;
-    margin: 10px 0;
   }
 }
