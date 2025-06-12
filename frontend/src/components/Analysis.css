@@ -139,3 +139,17 @@
   margin-top: 2rem;
   color: #9ca3af;
 }
+
+.upload-label {
+  display: block;
+  cursor: pointer;
+}
+
+.browse-link {
+  color: #3b82f6;
+  text-decoration: underline;
+}
+
+.browse-link:hover {
+  color: #2563eb;
+}

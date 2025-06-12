@@ -113,14 +113,17 @@ const FileUpload = ({ setAnalysisResult, setLoading }) => {
       onDragLeave={handleDrag}
       onDrop={handleDrop}
     >
-      <input
-        type="file"
-        accept=".exe"
-        onChange={handleChange}
-        className="file-input"
-      />
-      <p>Drag & Drop your <strong>.exe</strong> file here or click to browse.</p>
-      {file && <p className="file-selected">Selected File: {file.name}</p>}
+      <label className="upload-label">
+        <input
+          type="file"
+          accept=".exe"
+          onChange={handleChange}
+          className="file-input"
+        />
+        <p>📂 Drag & Drop your <strong>.exe</strong> file here or <span className="browse-link">click to browse</span>.</p>
+      </label>
+
+      {file && <p className="file-selected">✅ Selected File: {file.name}</p>}
       <button onClick={handleUpload}>Analyze File</button>
 
       {progress > 0 && (
