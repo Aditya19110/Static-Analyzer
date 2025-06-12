@@ -1,12 +1,25 @@
+/* Global Base Styles */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to right top, #0f2027, #203a43, #2c5364);
+  scroll-behavior: smooth;
+}
+
+/* Analysis Container */
 .analysis-container {
   max-width: 1000px;
-  margin: 40px auto;
+  margin: 60px auto 80px; /* Extra bottom margin for reupload button visibility */
   padding: 20px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   animation: fadeInUp 0.8s ease-out;
   color: #fff;
 }
 
+/* Section Title */
 .section-title {
   font-size: 2rem;
   margin: 40px 0 20px;
@@ -14,6 +27,7 @@
   color: #00e3ff;
 }
 
+/* Card Styling */
 .card {
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.15);
@@ -30,7 +44,7 @@
   font-size: 1.2rem;
 }
 
-/* Scrollable Wrapper */
+/* Scrollable Table Wrapper */
 .results-table-wrapper {
   max-height: 500px;
   overflow-x: auto;
@@ -38,7 +52,7 @@
   border-radius: 10px;
 }
 
-/* Main Table Styling */
+/* Table Styling */
 .results-table {
   width: 100%;
   border-collapse: collapse;
@@ -47,7 +61,7 @@
   color: #f1f1f1;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 .results-table th,
@@ -68,7 +82,7 @@
   backdrop-filter: blur(4px);
 }
 
-/* Status Colors */
+/* Status Coloring */
 .results-table td.clean {
   color: #00e676;
   font-weight: 500;
@@ -126,22 +140,25 @@
   color: #9e9e9e;
 }
 
+/* Reupload Button */
 .reupload-button {
   background-color: #00c6ff;
   color: white;
   border: none;
-  padding: 10px 25px;
+  padding: 12px 30px;
   border-radius: 30px;
   cursor: pointer;
   display: block;
-  margin: 0 auto 20px;
+  margin: 40px auto 20px;
   transition: background 0.3s ease;
+  font-size: 1rem;
 }
 
 .reupload-button:hover {
   background-color: #0086aa;
 }
 
+/* Loading Message */
 .loading-msg {
   text-align: center;
   color: #ccc;
@@ -150,7 +167,7 @@
   font-size: 1.2rem;
 }
 
-/* Fade-in animation */
+/* Fade-in Animation */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -175,6 +192,7 @@
   }
 
   .reupload-button {
-    width: 100%;
+    width: 90%;
+    font-size: 0.95rem;
   }
 }
