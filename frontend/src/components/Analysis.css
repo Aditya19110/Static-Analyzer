@@ -1,25 +1,24 @@
 /* Global Base Styles */
 html, body {
-  height: 100%;
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
-  overflow-y: auto;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(to right top, #0f2027, #203a43, #2c5364);
+  color: #fff;
   scroll-behavior: smooth;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
-/* Analysis Container */
+/* Container for analysis content */
 .analysis-container {
   max-width: 1000px;
-  margin: 60px auto 80px; /* Extra bottom margin for reupload button visibility */
+  margin: 60px auto 80px;
   padding: 20px;
   animation: fadeInUp 0.8s ease-out;
-  color: #fff;
 }
 
-/* Section Title */
+/* Section Heading */
 .section-title {
   font-size: 2rem;
   margin: 40px 0 20px;
@@ -27,7 +26,7 @@ html, body {
   color: #00e3ff;
 }
 
-/* Card Styling */
+/* Card Box */
 .card {
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.15);
@@ -52,7 +51,7 @@ html, body {
   border-radius: 10px;
 }
 
-/* Table Styling */
+/* Table */
 .results-table {
   width: 100%;
   border-collapse: collapse;
@@ -82,7 +81,7 @@ html, body {
   backdrop-filter: blur(4px);
 }
 
-/* Status Coloring */
+/* Table Row Status Colors */
 .results-table td.clean {
   color: #00e676;
   font-weight: 500;
@@ -104,7 +103,7 @@ html, body {
   font-style: italic;
 }
 
-/* VT Stats List */
+/* VirusTotal Stats List */
 .stats-list {
   list-style: none;
   padding: 0;
@@ -118,6 +117,7 @@ html, body {
   font-size: 0.95rem;
 }
 
+/* Icon Colors */
 .icon {
   margin-right: 10px;
   width: 18px;
@@ -158,7 +158,7 @@ html, body {
   background-color: #0086aa;
 }
 
-/* Loading Message */
+/* Loading message */
 .loading-msg {
   text-align: center;
   color: #ccc;
@@ -167,7 +167,7 @@ html, body {
   font-size: 1.2rem;
 }
 
-/* Fade-in Animation */
+/* Animation */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -179,7 +179,7 @@ html, body {
   }
 }
 
-/* Responsive Design */
+/* Responsive Adjustments */
 @media (max-width: 768px) {
   .analysis-container {
     padding: 10px;
