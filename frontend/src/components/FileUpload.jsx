@@ -26,8 +26,12 @@ const FileUpload = ({ setResult }) => {
     setError("");
 
     try {
-      const response = await axios.post("https://your-backend-api/upload", formData);
-      setResult(response.data);
+      const response = await axios.post("https://static-analyzer-zh53.onrender.com", formData);
+      if (response?.data) {
+        setResult(response.data);
+      } else {
+        setError("No result returned from server.");
+      }
     } catch (err) {
       console.error("Upload failed:", err);
       setError("Error uploading or analyzing file.");
@@ -44,8 +48,16 @@ const FileUpload = ({ setResult }) => {
         accept=".exe"
         className="upload-input"
       />
-      <button onClick={handleUpload} className="upload-button" disabled={uploading}>
-        {uploading ? <Loader2 className="spinner" /> : "Upload & Analyze"}
+      <button
+        onClick={handleUpload}
+        className="upload-button"
+        disabled={uploading}
+      >
+        {uploading ? (
+          <Loader2 className="spinner" />
+        ) : (
+          "Upload & Analyze"
+        )}
       </button>
       {error && <p className="error-message">{error}</p>}
     </div>
