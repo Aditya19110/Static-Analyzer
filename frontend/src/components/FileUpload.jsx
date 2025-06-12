@@ -1,145 +1,53 @@
 import React, { useState } from "react";
-import "./FileUpload.css";
+import axios from "axios";
+import { Loader2 } from "lucide-react";
+import "./Analysis.css";
 
-const FileUpload = ({ setAnalysisResult, setLoading }) => {
+const FileUpload = ({ setResult }) => {
   const [file, setFile] = useState(null);
-  const [dragActive, setDragActive] = useState(false);
-  const [progress, setProgress] = useState(0);
+  const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleDrag = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (["dragenter", "dragover"].includes(e.type)) {
-      setDragActive(true);
-    } else if (e.type === "dragleave") {
-      setDragActive(false);
-    }
-  };
-
-  const handleDrop = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setDragActive(false);
-    const droppedFile = e.dataTransfer.files[0];
-    if (droppedFile && droppedFile.name.endsWith(".exe")) {
-      setFile(droppedFile);
-    } else {
-      alert("Only .exe files are allowed.");
-    }
-  };
-
-  const handleChange = (e) => {
-    const selected = e.target.files[0];
-    if (selected && selected.name.endsWith(".exe")) {
-      setFile(selected);
-    } else {
-      alert("Only .exe files are allowed.");
-    }
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+    setError("");
   };
 
   const handleUpload = async () => {
     if (!file) {
-      alert("Please select a .exe file first!");
+      setError("Please select a file.");
       return;
     }
 
+    const formData = new FormData();
+    formData.append("file", file);
+
+    setUploading(true);
+    setError("");
+
     try {
-      setLoading(true);
-      setProgress(10);
-
-      const formData = new FormData();
-      formData.append("file", file);
-
-      // 1️⃣ Upload for static analysis
-      const uploadRes = await fetch("https://static-analyzer-zh53.onrender.com/upload", {
-        method: "POST",
-        body: formData,
-      });
-      const result = await uploadRes.json();
-
-      if (uploadRes.status !== 200 || result.error) {
-        throw new Error(result.error || "Static analysis failed");
-      }
-
-      setProgress(40);
-
-      // 2️⃣ Upload to VirusTotal
-      const vtRes = await fetch("https://static-analyzer-zh53.onrender.com/api/virustotal/upload", {
-        method: "POST",
-        body: formData,
-      });
-      const vtUpload = await vtRes.json();
-
-      if (vtRes.status !== 200 || vtUpload.error) {
-        throw new Error(vtUpload.error || "VirusTotal upload failed");
-      }
-
-      const analysisId = vtUpload.data.id;
-      setProgress(60);
-
-      // 3️⃣ Polling function
-      const pollResult = async () => {
-        const analysisRes = await fetch(
-          `https://static-analyzer-zh53.onrender.com/api/virustotal/analysis/${analysisId}`
-        );
-        const analysisData = await analysisRes.json();
-
-        if (analysisData.data?.attributes?.status !== "completed") {
-          setTimeout(pollResult, 3000);
-        } else {
-          setProgress(100);
-          setAnalysisResult({
-            ...result,
-            virustotal: analysisData,
-          });
-          setLoading(false);
-        }
-      };
-
-      pollResult();
+      const response = await axios.post("https://your-backend-api/upload", formData);
+      setResult(response.data);
     } catch (err) {
       console.error("Upload failed:", err);
-      alert("Error uploading or analyzing file: " + (err.message || "Unknown error"));
-      setLoading(false);
-      setProgress(0);
+      setError("Error uploading or analyzing file.");
+    } finally {
+      setUploading(false);
     }
   };
 
   return (
-    <div
-      className={`file-upload-container ${dragActive ? "drag-active" : ""}`}
-      onDragEnter={handleDrag}
-      onDragOver={handleDrag}
-      onDragLeave={handleDrag}
-      onDrop={handleDrop}
-    >
+    <div className="upload-wrapper">
       <input
         type="file"
+        onChange={handleFileChange}
         accept=".exe"
-        onChange={handleChange}
-        className="file-input"
+        className="upload-input"
       />
-      <label htmlFor="file-upload" style={{ cursor: "pointer" }}>
-        <p>
-          <strong>Drag & Drop</strong> your <strong>.exe</strong> file here<br />
-          or <u>click to browse</u>
-        </p>
-      </label>
-      <input
-        id="file-upload"
-        type="file"
-        accept=".exe"
-        onChange={handleChange}
-        className="file-input"
-      />
-      {file && <p className="file-selected">Selected File: {file.name}</p>}
-      <button onClick={handleUpload}>Analyze File</button>
-
-      {progress > 0 && (
-        <div className="progress-bar">
-          <div className="progress-fill" style={{ width: `${progress}%` }}></div>
-        </div>
-      )}
+      <button onClick={handleUpload} className="upload-button" disabled={uploading}>
+        {uploading ? <Loader2 className="spinner" /> : "Upload & Analyze"}
+      </button>
+      {error && <p className="error-message">{error}</p>}
     </div>
   );
 };

@@ -1,82 +1,74 @@
-.analysis-container {
-  padding: 20px;
-  color: #e0e0e0;
-  font-family: 'Segoe UI', sans-serif;
+body {
+  font-family: Arial, sans-serif;
+  background-color: #102027;
+  color: #e0f7fa;
 }
 
-.section-title {
-  text-align: center;
-  font-size: 2rem;
-  margin-bottom: 1.5rem;
-  color: #00ffcc;
+.result-wrapper,
+.upload-wrapper {
+  padding: 20px;
+  max-width: 1000px;
+  margin: auto;
 }
 
 .card {
-  background: #1e1e2f;
+  background-color: #1a2b36;
   padding: 20px;
   margin-bottom: 20px;
-  border-radius: 12px;
-  box-shadow: 0 0 12px rgba(0, 255, 255, 0.1);
+  border-radius: 10px;
+  box-shadow: 0px 2px 10px rgba(0,0,0,0.3);
 }
 
-.stats-list {
-  list-style: none;
-  padding: 0;
+.section-title {
+  color: #00e3ff;
+  margin-bottom: 15px;
+  text-align: center;
 }
 
-.stats-list li {
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #455a64;
+  color: #ffffff;
+}
+
+.upload-input {
+  background: #263238;
+  border: none;
+  color: #fff;
+  padding: 8px;
+  margin-right: 10px;
+  border-radius: 4px;
+}
+
+.upload-button {
+  background-color: #00bcd4;
+  border: none;
+  padding: 10px 20px;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.upload-button:hover {
+  background-color: #0097a7;
+}
+
+.error-message {
+  color: #ff5252;
+  margin-top: 10px;
+}
+
+.summary p {
   margin: 8px 0;
   display: flex;
   align-items: center;
-}
-
-.icon {
-  margin-right: 10px;
-}
-
-.green { color: #4caf50; }
-.red { color: #f44336; }
-.yellow { color: #ff9800; }
-.gray { color: #9e9e9e; }
-
-.results-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 15px;
-}
-
-.results-table th,
-.results-table td {
-  border: 1px solid #333;
-  padding: 10px;
-  text-align: left;
-}
-
-.results-table thead {
-  background-color: #2d2d3a;
-}
-
-.clean { color: #4caf50; }
-.malicious { color: #f44336; font-weight: bold; }
-.suspicious { color: #ff9800; font-weight: bold; }
-
-.reupload-button {
-  background-color: #007bff; /* Bootstrap blue */
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  cursor: pointer;
-  margin-bottom: 1rem;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.reupload-button:hover {
-  background-color: #0056b3;
-  transform: scale(1.03);
-}
-
-.reupload-button:active {
-  transform: scale(0.97);
+  gap: 8px;
 }
