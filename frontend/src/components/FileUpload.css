@@ -4,12 +4,10 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(to right top, #0f2027, #203a43, #2c5364);
   color: white;
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
-  box-sizing: border-box;
 }
 
 .file-upload-container {
@@ -23,7 +21,6 @@ body {
   text-align: center;
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   transition: transform 0.3s ease;
-  animation: fadeInUp 0.8s ease-out;
 }
 
 .file-upload-container:hover {
@@ -33,7 +30,6 @@ body {
 .file-upload-container p {
   margin: 10px 0;
   font-size: 1.1rem;
-  line-height: 1.5;
 }
 
 .file-input {
@@ -49,12 +45,11 @@ body {
   font-weight: bold;
   color: #00e3ff;
   margin-top: 10px;
-  word-break: break-all;
 }
 
 button {
   margin-top: 20px;
-  padding: 12px 28px;
+  padding: 10px 25px;
   background-color: #00c6ff;
   color: white;
   border: none;
@@ -83,7 +78,6 @@ button:hover {
   transition: width 0.4s ease-in-out;
 }
 
-/* Fade-in animation */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -95,25 +89,6 @@ button:hover {
   }
 }
 
-/* Responsive design */
-@media (max-width: 480px) {
-  .file-upload-container {
-    padding: 20px;
-    width: 100%;
-    border-radius: 15px;
-  }
-
-  .file-upload-container p {
-    font-size: 1rem;
-  }
-
-  button {
-    width: 100%;
-    font-size: 1rem;
-    padding: 12px;
-  }
-
-  .file-selected {
-    font-size: 0.9rem;
-  }
+.file-upload-container {
+  animation: fadeInUp 0.8s ease-out;
 }
