@@ -1,74 +1,122 @@
 body {
-  font-family: Arial, sans-serif;
-  background-color: #102027;
-  color: #e0f7fa;
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to right top, #1e3c72, #2a5298);
+  color: #fff;
 }
 
-.result-wrapper,
-.upload-wrapper {
-  padding: 20px;
-  max-width: 1000px;
+.analysis-wrapper {
+  max-width: 960px;
   margin: auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h1, h2 {
+  color: #00e3ff;
+}
+
+.reupload-btn {
+  background: #00e3ff;
+  color: #000;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.reupload-btn:hover {
+  background: #00bcd4;
 }
 
 .card {
-  background-color: #1a2b36;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
   padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 2px 10px rgba(0,0,0,0.3);
+  margin: 20px 0;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
 }
 
-.section-title {
-  color: #00e3ff;
-  margin-bottom: 15px;
-  text-align: center;
-}
-
-table {
+.styled-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 10px;
 }
 
-th, td {
-  padding: 10px;
+.styled-table th, .styled-table td {
+  padding: 12px;
   text-align: left;
-  border-bottom: 1px solid #455a64;
-  color: #ffffff;
+  border-bottom: 1px solid #333;
+  color: #f0f0f0;
 }
 
-.upload-input {
-  background: #263238;
-  border: none;
-  color: #fff;
-  padding: 8px;
-  margin-right: 10px;
-  border-radius: 4px;
+.styled-table th {
+  background: #0e5a82;
 }
 
-.upload-button {
-  background-color: #00bcd4;
-  border: none;
-  padding: 10px 20px;
-  color: #fff;
-  font-weight: bold;
-  border-radius: 5px;
-  cursor: pointer;
+.dll-block {
+  margin-bottom: 15px;
 }
 
-.upload-button:hover {
-  background-color: #0097a7;
+ul.summary-icons {
+  list-style: none;
+  padding: 0;
 }
 
-.error-message {
-  color: #ff5252;
-  margin-top: 10px;
-}
-
-.summary p {
-  margin: 8px 0;
+.summary-icons li {
   display: flex;
   align-items: center;
   gap: 8px;
+  margin: 8px 0;
+  font-weight: 500;
+}
+
+.red {
+  color: #ff5252;
+}
+
+.yellow {
+  color: #ffeb3b;
+}
+
+.green {
+  color: #4caf50;
+}
+
+.gray {
+  color: #9e9e9e;
+}
+
+.analysis-placeholder {
+  text-align: center;
+  margin-top: 100px;
+  font-size: 1.5rem;
+  color: #ccc;
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .reupload-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .styled-table th, .styled-table td {
+    font-size: 0.9rem;
+  }
 }
