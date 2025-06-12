@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./FileUpload.css"; // Create this for styling
+import "./FileUpload.css";
 
 const FileUpload = ({ setAnalysisResult, setLoading }) => {
   const [file, setFile] = useState(null);
@@ -121,7 +121,7 @@ const FileUpload = ({ setAnalysisResult, setLoading }) => {
       />
       <label htmlFor="file-upload" style={{ cursor: "pointer" }}>
         <p>
-          🚀 <strong>Drag & Drop</strong> your <strong>.exe</strong> file here<br />
+          <strong>Drag & Drop</strong> your <strong>.exe</strong> file here<br />
           or <u>click to browse</u>
         </p>
       </label>
