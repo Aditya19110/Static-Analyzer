@@ -1,44 +1,94 @@
-.file-upload-container {
-  border: 2px dashed #888;
-  padding: 30px;
-  border-radius: 10px;
-  text-align: center;
-  transition: background 0.2s ease;
-  margin-bottom: 20px;
+/* FileUpload.css */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to right top, #0f2027, #203a43, #2c5364);
+  color: white;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.file-upload-container.drag-active {
-  background-color: #e0f7fa;
-  border-color: #00acc1;
+.file-upload-container {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 30px;
+  width: 90%;
+  max-width: 500px;
+  text-align: center;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  transition: transform 0.3s ease;
+}
+
+.file-upload-container:hover {
+  transform: scale(1.01);
+}
+
+.file-upload-container p {
+  margin: 10px 0;
+  font-size: 1.1rem;
 }
 
 .file-input {
-  display: block;
-  margin: 10px auto;
+  display: none;
+}
+
+.file-upload-container.drag-active {
+  border: 2px dashed #00c6ff;
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .file-selected {
-  margin: 10px 0;
   font-weight: bold;
-}
-
-button {
-  padding: 10px 20px;
+  color: #00e3ff;
   margin-top: 10px;
 }
 
+button {
+  margin-top: 20px;
+  padding: 10px 25px;
+  background-color: #00c6ff;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background-color: #007eaa;
+}
+
 .progress-bar {
+  margin-top: 20px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  height: 12px;
   width: 100%;
-  height: 10px;
-  background: #eee;
-  border-radius: 5px;
-  margin-top: 15px;
   overflow: hidden;
 }
 
 .progress-fill {
+  background: #00e3ff;
   height: 100%;
-  background: linear-gradient(90deg, #2196f3, #42a5f5);
-  width: 0%;
-  transition: width 0.4s ease;
+  transition: width 0.4s ease-in-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.file-upload-container {
+  animation: fadeInUp 0.8s ease-out;
 }
