@@ -10,137 +10,130 @@ const AnalysisResult = ({ result }) => {
   const results = vtData?.data?.attributes?.results;
 
   return (
-    <div className="analysis-container">
-      <h2 className="section-title">Malware Analysis</h2>
+    <main className="analysis-wrapper">
+      <div className="analysis-container">
+        <h2 className="section-title">Malware Analysis</h2>
+        <button onClick={() => window.location.reload()} className="reupload-button">
+          Re-Upload App
+        </button>
 
-      <button onClick={() => window.location.reload()} className="reupload-button">
-        Re-Upload App
-      </button>
-
-      {/* File Hashes */}
-      {result.hashes && (
-        <div className="card">
-          <h4>File Hashes</h4>
-          <p><strong>MD5:</strong> {result.hashes.md5}</p>
-          <p><strong>SHA1:</strong> {result.hashes.sha1}</p>
-          <p><strong>SHA256:</strong> {result.hashes.sha256}</p>
-        </div>
-      )}
-
-      {/* PE Header Info */}
-      {result.pe_info && (
-        <div className="card">
-          <h4>PE Header Info</h4>
-          <p><strong>Entry Point:</strong> {result.pe_info.entry_point}</p>
-          <p><strong>Image Base:</strong> {result.pe_info.image_base}</p>
-          <p><strong>Compile Time:</strong> {result.pe_info.compile_time}</p>
-        </div>
-      )}
-
-      {/* Section Info */}
-      {result.sections && (
-        <div className="card">
-          <h4>Section Info</h4>
-          <div className="results-table-wrapper">
-            <table className="results-table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Virtual Size</th>
-                  <th>Raw Size</th>
-                  <th>Entropy</th>
-                </tr>
-              </thead>
-              <tbody>
-                {result.sections.map((sec, i) => (
-                  <tr key={i}>
-                    <td>{sec.name}</td>
-                    <td>{sec.virtual_size}</td>
-                    <td>{sec.raw_size}</td>
-                    <td>{sec.entropy ? sec.entropy.toFixed(2) : "N/A"}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+        {result.hashes && (
+          <div className="card">
+            <h4>File Hashes</h4>
+            <p><strong>MD5:</strong> {result.hashes.md5}</p>
+            <p><strong>SHA1:</strong> {result.hashes.sha1}</p>
+            <p><strong>SHA256:</strong> {result.hashes.sha256}</p>
           </div>
-        </div>
-      )}
+        )}
 
-      {/* Import Info */}
-      {result.imports && (
-        <div className="card">
-          <h4>Imported DLLs & Functions</h4>
-          {result.imports.map((imp, i) => (
-            <div key={i} className="dll-entry">
-              <strong>{imp.dll}</strong>
-              <ul>
-                {imp.functions.map((fn, j) => (
-                  <li key={j}>{fn}</li>
-                ))}
-              </ul>
+        {result.pe_info && (
+          <div className="card">
+            <h4>PE Header Info</h4>
+            <p><strong>Entry Point:</strong> {result.pe_info.entry_point}</p>
+            <p><strong>Image Base:</strong> {result.pe_info.image_base}</p>
+            <p><strong>Compile Time:</strong> {result.pe_info.compile_time}</p>
+          </div>
+        )}
+
+        {result.sections && (
+          <div className="card">
+            <h4>Section Info</h4>
+            <div className="results-table-wrapper">
+              <table className="results-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Virtual Size</th>
+                    <th>Raw Size</th>
+                    <th>Entropy</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {result.sections.map((sec, i) => (
+                    <tr key={i}>
+                      <td>{sec.name}</td>
+                      <td>{sec.virtual_size}</td>
+                      <td>{sec.raw_size}</td>
+                      <td>{sec.entropy ? sec.entropy.toFixed(2) : "N/A"}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
-          ))}
-        </div>
-      )}
+          </div>
+        )}
 
-      {/* VT Summary */}
-      <h2 className="section-title">VirusTotal Analysis</h2>
+        {result.imports && (
+          <div className="card">
+            <h4>Imported DLLs & Functions</h4>
+            {result.imports.map((imp, i) => (
+              <div key={i}>
+                <strong>{imp.dll}</strong>
+                <ul>
+                  {imp.functions.map((fn, j) => (
+                    <li key={j}>{fn}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        )}
 
-      {!vtData && (
-        <div className="card">
-          <p>VirusTotal scan not available.</p>
-        </div>
-      )}
+        <h2 className="section-title">VirusTotal Analysis</h2>
 
-      {stats && (
-        <div className="card">
-          <h4>VirusTotal Summary</h4>
-          <ul className="stats-list">
-            <li><ShieldX className="icon red" /> <strong>Malicious:</strong> {stats.malicious}</li>
-            <li><AlertTriangle className="icon yellow" /> <strong>Suspicious:</strong> {stats.suspicious}</li>
-            <li><ShieldCheck className="icon green" /> <strong>Harmless:</strong> {stats.harmless}</li>
-            <li><Loader2 className="icon gray" /> <strong>Undetected:</strong> {stats.undetected}</li>
-          </ul>
-        </div>
-      )}
+        {!vtData && (
+          <div className="card">
+            <p>VirusTotal scan not available.</p>
+          </div>
+        )}
 
-      {/* VT Detailed Table */}
-      {results && (
-        <div className="card">
-          <h4>Detailed Scan Results</h4>
-          <div className="results-table-wrapper">
-            <table className="results-table">
-              <thead>
-                <tr>
-                  <th>Engine</th>
-                  <th>Category</th>
-                  <th>Result</th>
-                </tr>
-              </thead>
-              <tbody>
-                {Object.entries(results).map(([engine, details]) => {
-                  const category = details.category || "unknown";
-                  const resultText = details.result || "Clean";
+        {stats && (
+          <div className="card">
+            <h4>VirusTotal Summary</h4>
+            <ul className="stats-list">
+              <li><ShieldX className="icon red" /> <strong>Malicious:</strong> {stats.malicious}</li>
+              <li><AlertTriangle className="icon yellow" /> <strong>Suspicious:</strong> {stats.suspicious}</li>
+              <li><ShieldCheck className="icon green" /> <strong>Harmless:</strong> {stats.harmless}</li>
+              <li><Loader2 className="icon gray" /> <strong>Undetected:</strong> {stats.undetected}</li>
+            </ul>
+          </div>
+        )}
 
-                  // Determine class
-                  let resultClass = "clean";
-                  if (details.result === "malicious") resultClass = "malicious";
-                  else if (details.result && details.result !== "malicious") resultClass = "suspicious";
-
-                  return (
+        {results && (
+          <div className="card">
+            <h4>Detailed Scan Results</h4>
+            <div className="results-table-wrapper">
+              <table className="results-table">
+                <thead>
+                  <tr>
+                    <th>Engine</th>
+                    <th>Category</th>
+                    <th>Result</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {Object.entries(results).map(([engine, details]) => (
                     <tr key={engine}>
                       <td>{engine}</td>
-                      <td>{category}</td>
-                      <td className={resultClass}>{resultText}</td>
+                      <td>{details.category}</td>
+                      <td className={
+                        details.result === null
+                          ? "clean"
+                          : details.result === "malicious"
+                          ? "malicious"
+                          : "suspicious"
+                      }>
+                        {details.result || "Clean"}
+                      </td>
                     </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </main>
   );
 };
 
