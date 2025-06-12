@@ -12,10 +12,12 @@ const AnalysisResult = ({ result }) => {
   return (
     <div className="analysis-container">
       <h2 className="section-title">Malware Analysis</h2>
+
       <button onClick={() => window.location.reload()} className="reupload-button">
         Re-Upload App
       </button>
 
+      {/* File Hashes */}
       {result.hashes && (
         <div className="card">
           <h4>File Hashes</h4>
@@ -25,6 +27,7 @@ const AnalysisResult = ({ result }) => {
         </div>
       )}
 
+      {/* PE Header Info */}
       {result.pe_info && (
         <div className="card">
           <h4>PE Header Info</h4>
@@ -34,6 +37,7 @@ const AnalysisResult = ({ result }) => {
         </div>
       )}
 
+      {/* Section Info */}
       {result.sections && (
         <div className="card">
           <h4>Section Info</h4>
@@ -62,11 +66,12 @@ const AnalysisResult = ({ result }) => {
         </div>
       )}
 
+      {/* Import Info */}
       {result.imports && (
         <div className="card">
           <h4>Imported DLLs & Functions</h4>
           {result.imports.map((imp, i) => (
-            <div key={i} style={{ marginBottom: "12px" }}>
+            <div key={i} className="dll-entry">
               <strong>{imp.dll}</strong>
               <ul>
                 {imp.functions.map((fn, j) => (
@@ -78,6 +83,7 @@ const AnalysisResult = ({ result }) => {
         </div>
       )}
 
+      {/* VT Summary */}
       <h2 className="section-title">VirusTotal Analysis</h2>
 
       {!vtData && (
@@ -98,6 +104,7 @@ const AnalysisResult = ({ result }) => {
         </div>
       )}
 
+      {/* VT Detailed Table */}
       {results && (
         <div className="card">
           <h4>Detailed Scan Results</h4>
@@ -111,23 +118,23 @@ const AnalysisResult = ({ result }) => {
                 </tr>
               </thead>
               <tbody>
-                {Object.entries(results).map(([engine, details]) => (
-                  <tr key={engine}>
-                    <td>{engine}</td>
-                    <td>{details.category}</td>
-                    <td
-                      className={
-                        details.result === null
-                          ? "clean"
-                          : details.result === "malicious"
-                          ? "malicious"
-                          : "suspicious"
-                      }
-                    >
-                      {details.result || "Clean"}
-                    </td>
-                  </tr>
-                ))}
+                {Object.entries(results).map(([engine, details]) => {
+                  const category = details.category || "unknown";
+                  const resultText = details.result || "Clean";
+
+                  // Determine class
+                  let resultClass = "clean";
+                  if (details.result === "malicious") resultClass = "malicious";
+                  else if (details.result && details.result !== "malicious") resultClass = "suspicious";
+
+                  return (
+                    <tr key={engine}>
+                      <td>{engine}</td>
+                      <td>{category}</td>
+                      <td className={resultClass}>{resultText}</td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
