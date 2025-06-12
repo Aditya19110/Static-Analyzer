@@ -8,9 +8,8 @@ from dotenv import load_dotenv
 import pefile
 
 load_dotenv()
-
 app = Flask(__name__)
-CORS(app)
+CORS(app, origins=["https://static-analyzer.vercel.app"])
 
 UPLOAD_FOLDER = "uploads"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./FileUpload.css"; // Create this for styling
+import "./Analysis.css"; 
 
 const FileUpload = ({ setAnalysisResult, setLoading }) => {
   const [file, setFile] = useState(null);
@@ -21,7 +21,7 @@ const FileUpload = ({ setAnalysisResult, setLoading }) => {
     e.stopPropagation();
     setDragActive(false);
     const droppedFile = e.dataTransfer.files[0];
-    if (droppedFile && droppedFile.name.endsWith(".exe")) {
+    if (droppedFile && droppedFile.nzame.endsWith(".exe")) {
       setFile(droppedFile);
     } else {
       alert("Only .exe files are allowed.");
@@ -50,7 +50,6 @@ const FileUpload = ({ setAnalysisResult, setLoading }) => {
       const formData = new FormData();
       formData.append("file", file);
 
-      // 1️⃣ Upload for static analysis
       const uploadRes = await fetch("https://static-analyzer-zh53.onrender.com/upload", {
         method: "POST",
         body: formData,
@@ -63,7 +62,6 @@ const FileUpload = ({ setAnalysisResult, setLoading }) => {
 
       setProgress(40);
 
-      // 2️⃣ Upload to VirusTotal
       const vtRes = await fetch("https://static-analyzer-zh53.onrender.com/api/virustotal/upload", {
         method: "POST",
         body: formData,
@@ -77,7 +75,6 @@ const FileUpload = ({ setAnalysisResult, setLoading }) => {
       const analysisId = vtUpload.data.id;
       setProgress(60);
 
-      // 3️⃣ Polling function
       const pollResult = async () => {
         const analysisRes = await fetch(
           `https://static-analyzer-zh53.onrender.com/api/virustotal/analysis/${analysisId}`
