@@ -207,3 +207,36 @@ body {
   color: #6b7280;
   font-style: italic;
 }
+
+.button-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.download-button {
+  padding: 0.5rem 1rem;
+  background-color: #388e3c;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.download-button:hover {
+  background-color: #2e7d32;
+}
+
+.string-box {
+  max-height: 200px;
+  overflow-y: auto;
+  background: #f1f1f1;
+  padding: 10px;
+  border-radius: 8px;
+  font-family: monospace;
+  white-space: pre-wrap;
+}

@@ -1,5 +1,5 @@
 import React from "react";
-import { ShieldCheck, ShieldX, AlertTriangle, Loader2 } from "lucide-react";
+import { ShieldCheck, ShieldX, AlertTriangle, Loader2, Download } from "lucide-react";
 import "./Analysis.css";
 
 const AnalysisResult = ({ result }) => {
@@ -9,13 +9,28 @@ const AnalysisResult = ({ result }) => {
   const stats = vtData?.data?.attributes?.stats;
   const results = vtData?.data?.attributes?.results;
 
+  const handleDownloadReport = () => {
+    const blob = new Blob([JSON.stringify(result, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${result.filename || "analysis-report"}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <main className="analysis-wrapper">
       <div className="analysis-container">
         <h2 className="section-title">Malware Analysis</h2>
-        <button onClick={() => window.location.reload()} className="reupload-button">
-          Re-Upload App
-        </button>
+        <div className="button-row">
+          <button onClick={() => window.location.reload()} className="reupload-button">
+            Re-Upload App
+          </button>
+          <button onClick={handleDownloadReport} className="download-button">
+            <Download className="icon" /> Download Report
+          </button>
+        </div>
 
         {result.hashes && (
           <div className="card">
@@ -78,6 +93,7 @@ const AnalysisResult = ({ result }) => {
             ))}
           </div>
         )}
+
         {result.language_guess && (
           <div className="card">
             <h4>Likely Programming Language</h4>
@@ -85,7 +101,15 @@ const AnalysisResult = ({ result }) => {
           </div>
         )}
 
-        <h2 className="section-title">VirusTotal Analysis</h2>
+        {result.strings && (
+          <div className="card">
+            <h4>Extracted Strings</h4>
+            <div className="string-box">
+              <pre>{result.strings.join("\n")}</pre>
+            </div>
+          </div>
+        )}
+
         <h2 className="section-title">VirusTotal Analysis</h2>
 
         {!vtData && (

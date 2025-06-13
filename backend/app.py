@@ -6,6 +6,7 @@ import hashlib
 import requests
 from dotenv import load_dotenv
 import pefile
+import re
 
 load_dotenv()
 app = Flask(__name__)
@@ -68,6 +69,16 @@ def get_imports(file_path):
             imports.append({"dll": dll, "functions": funcs})
     return imports
 
+def extract_strings(file_path, min_length=4):
+    strings = []
+    with open(file_path, "rb") as f:
+        data = f.read()
+        # Find all ASCII strings
+        pattern = rb'[\x20-\x7E]{' + bytes(str(min_length), 'utf-8') + rb',}'
+        found = re.findall(pattern, data)
+        strings = [s.decode(errors="ignore") for s in found]
+    return strings[:1000]  # Limit to first 1000 strings to avoid huge payloads
+
 def guess_language(file_path):
     try:
         pe = pefile.PE(file_path)
@@ -111,6 +122,7 @@ def upload_file():
         pe_info = get_pe_info(filepath)
         sections = get_sections_info(filepath)
         imports = get_imports(filepath)
+        strings = extract_strings(filepath)
         language = guess_language(filepath)
 
         return jsonify({
@@ -119,7 +131,8 @@ def upload_file():
             "pe_info": pe_info,
             "sections": sections,
             "imports": imports,
-            "language_guess": language
+            "language_guess": language,
+            "extracted_strings": strings
         })
     except Exception as e:
         return jsonify({"error": str(e)}), 500
