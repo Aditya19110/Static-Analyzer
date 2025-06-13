@@ -78,7 +78,14 @@ const AnalysisResult = ({ result }) => {
             ))}
           </div>
         )}
+        {result.language_guess && (
+          <div className="card">
+            <h4>Likely Programming Language</h4>
+            <p>{result.language_guess}</p>
+          </div>
+        )}
 
+        <h2 className="section-title">VirusTotal Analysis</h2>
         <h2 className="section-title">VirusTotal Analysis</h2>
 
         {!vtData && (

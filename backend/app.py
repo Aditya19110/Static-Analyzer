@@ -26,13 +26,11 @@ def calculate_hashes(file_path):
     md5 = hashlib.md5()
     sha1 = hashlib.sha1()
     sha256 = hashlib.sha256()
-
     with open(file_path, "rb") as f:
         for chunk in iter(lambda: f.read(4096), b""):
             md5.update(chunk)
             sha1.update(chunk)
             sha256.update(chunk)
-
     return {
         "md5": md5.hexdigest(),
         "sha1": sha1.hexdigest(),
@@ -70,6 +68,29 @@ def get_imports(file_path):
             imports.append({"dll": dll, "functions": funcs})
     return imports
 
+def guess_language(file_path):
+    try:
+        pe = pefile.PE(file_path)
+        imports = [entry.dll.decode().lower() for entry in getattr(pe, 'DIRECTORY_ENTRY_IMPORT', [])]
+
+        dotnet_present = any(dll in imports for dll in ['mscoree.dll', 'clr.dll'])
+        vb_runtime = any("vbrun" in dll for dll in imports)
+        python_runtime = any("python" in dll for dll in imports)
+        qt_or_cpp = any(dll in imports for dll in ['qt5core.dll', 'msvcp140.dll', 'vcruntime140.dll'])
+
+        if dotnet_present:
+            return "Likely .NET (C#, VB.NET, etc.)"
+        elif vb_runtime:
+            return "Likely Visual Basic"
+        elif python_runtime:
+            return "Likely Python (compiled with PyInstaller or similar)"
+        elif qt_or_cpp:
+            return "Likely C++ (QT or MSVC-based)"
+        else:
+            return "Likely Native C/C++"
+    except Exception as e:
+        return "Unknown"
+
 @app.route("/upload", methods=["POST"])
 def upload_file():
     if 'file' not in request.files:
@@ -90,13 +111,15 @@ def upload_file():
         pe_info = get_pe_info(filepath)
         sections = get_sections_info(filepath)
         imports = get_imports(filepath)
+        language = guess_language(filepath)
 
         return jsonify({
             "filename": file.filename,
             "hashes": result,
             "pe_info": pe_info,
             "sections": sections,
-            "imports": imports
+            "imports": imports,
+            "language_guess": language
         })
     except Exception as e:
         return jsonify({"error": str(e)}), 500
