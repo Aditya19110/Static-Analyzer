@@ -1,39 +1,13 @@
-/* Analysis.css */
-.upload-box {
-  color: #000; /* black text for everything inside upload box */
+/* ---------- Base Styling ---------- */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.upload-box button {
-  background: #3b82f6;
-  color: white; /* ✅ White text for the button */
-  padding: 0.6rem 1.2rem;
-  margin-top: 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.upload-box button:hover {
-  background: #2563eb;
-}
-/* Main wrapper (excluding header/footer) */
-.analysis-wrapper,
-.analysis-container,
-.section-title,
-.card,
-.results-table,
-.stats-list,
-.file-upload-container,
-.file-selected,
-.loading-msg,
-.upload-label {
-  color: #000;
-}
-
+/* ---------- Layout ---------- */
 .analysis-wrapper {
   padding: 2rem;
-  background: #6faff0;
-  font-family: sans-serif;
+  background: #e0f0ff;
+  color: #000;
 }
 
 .analysis-container {
@@ -41,20 +15,25 @@
   margin: auto;
 }
 
+/* ---------- Section Title ---------- */
 .section-title {
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
   text-align: center;
+  color: #1e3a8a;
 }
 
+/* ---------- Card ---------- */
 .card {
-  background: rgb(225, 93, 93);
-  padding: 1.2rem;
+  background: #ffffff;
+  padding: 1.5rem;
   margin: 1rem 0;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
+/* ---------- Results Table ---------- */
 .results-table-wrapper {
   overflow-x: auto;
 }
@@ -62,27 +41,41 @@
 .results-table {
   width: 100%;
   border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 .results-table th,
 .results-table td {
-  padding: 0.6rem;
-  border: 1px solid #ddd;
+  padding: 0.8rem 1rem;
+  border: 1px solid #d1d5db;
+  text-align: left;
 }
 
+.results-table th {
+  background: #f3f4f6;
+  color: #374151;
+  font-weight: 600;
+}
+
+/* ---------- Stats List ---------- */
 .stats-list {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 .stats-list li {
-  margin: 0.5rem 0;
   display: flex;
   align-items: center;
+  margin: 0.5rem 0;
+  font-size: 1rem;
 }
 
+/* ---------- Icons ---------- */
 .icon {
-  margin-right: 0.5rem;
+  margin-right: 0.6rem;
 }
 
 .icon.red {
@@ -90,7 +83,7 @@
 }
 
 .icon.yellow {
-  color: #facc15;
+  color: #f59e0b;
 }
 
 .icon.green {
@@ -110,35 +103,60 @@
 }
 
 .suspicious {
-  color: #facc15;
+  color: #f59e0b;
 }
 
+/* ---------- Re-upload Button ---------- */
 .reupload-button {
-  background: #3b82f6;
-  color: white;
-  padding: 0.5rem 1rem;
-  margin-bottom: 1.5rem;
+  background: #2563eb;
+  color: #fff;
+  padding: 0.6rem 1.2rem;
   border: none;
-  border-radius: 5px;
+  border-radius: 6px;
   cursor: pointer;
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  transition: background 0.3s ease;
 }
 
 .reupload-button:hover {
-  background: #2563eb;
+  background: #1d4ed8;
 }
 
-/* File Upload styles */
+/* ---------- File Upload ---------- */
 .file-upload-container {
-  border: 2px dashed #ccc;
+  border: 2px dashed #94a3b8;
+  background-color: #f8fafc;
   padding: 2rem;
   text-align: center;
-  border-radius: 10px;
+  border-radius: 12px;
   margin: 2rem auto;
-  transition: border-color 0.3s;
+  transition: border-color 0.3s ease-in-out;
+  color: #000;
 }
 
 .file-upload-container.drag-active {
-  border-color: #3b82f6;
+  border-color: #2563eb;
+  background-color: #eff6ff;
+}
+
+.upload-box {
+  color: #000;
+}
+
+.upload-label {
+  display: block;
+  cursor: pointer;
+}
+
+.browse-link {
+  color: #2563eb;
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.browse-link:hover {
+  color: #1e3a8a;
 }
 
 .file-input {
@@ -147,9 +165,27 @@
 
 .file-selected {
   margin-top: 1rem;
-  font-weight: bold;
+  font-weight: 600;
 }
 
+/* ---------- Upload Button in Upload Box ---------- */
+.upload-box button {
+  background: #2563eb;
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background 0.3s ease-in-out;
+}
+
+.upload-box button:hover {
+  background: #1e40af;
+}
+
+/* ---------- Progress Bar ---------- */
 .progress-bar {
   margin-top: 1rem;
   height: 10px;
@@ -160,25 +196,14 @@
 
 .progress-fill {
   height: 100%;
-  background: #3b82f6;
-  transition: width 0.3s ease-in-out;
+  background: #2563eb;
+  transition: width 0.4s ease-in-out;
 }
 
+/* ---------- Loading Message ---------- */
 .loading-msg {
   text-align: center;
   margin-top: 2rem;
-}
-
-.upload-label {
-  display: block;
-  cursor: pointer;
-}
-
-.browse-link {
-  color: #3b82f6;
-  text-decoration: underline;
-}
-
-.browse-link:hover {
-  color: #2563eb;
+  color: #6b7280;
+  font-style: italic;
 }
