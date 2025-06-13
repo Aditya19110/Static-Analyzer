@@ -113,6 +113,7 @@ const FileUpload = ({ setAnalysisResult, setLoading }) => {
       onDragLeave={handleDrag}
       onDrop={handleDrop}
     >
+      <div className="upload-box">
       <label className="upload-label">
         <input
           type="file"
@@ -131,6 +132,7 @@ const FileUpload = ({ setAnalysisResult, setLoading }) => {
           <div className="progress-fill" style={{ width: `${progress}%` }}></div>
         </div>
       )}
+      </div>
     </div>
   );
 };

@@ -1,5 +1,7 @@
 /* Analysis.css */
-
+.upload-box{
+  color: #ccc;
+}
 /* Main wrapper (excluding header/footer) */
 .analysis-wrapper,
 .analysis-container,
