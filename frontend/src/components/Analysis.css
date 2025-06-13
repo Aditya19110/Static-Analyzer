@@ -1,8 +1,22 @@
 /* Analysis.css */
 
+/* Main wrapper (excluding header/footer) */
+.analysis-wrapper,
+.analysis-container,
+.section-title,
+.card,
+.results-table,
+.stats-list,
+.file-upload-container,
+.file-selected,
+.loading-msg,
+.upload-label {
+  color: #000;
+}
+
 .analysis-wrapper {
   padding: 2rem;
-  background: #f9fafb;
+  background: #6faff0;
   font-family: sans-serif;
 }
 
@@ -18,7 +32,7 @@
 }
 
 .card {
-  background: white;
+  background: rgb(225, 93, 93);
   padding: 1.2rem;
   margin: 1rem 0;
   border-radius: 10px;
@@ -137,7 +151,6 @@
 .loading-msg {
   text-align: center;
   margin-top: 2rem;
-  color: #9ca3af;
 }
 
 .upload-label {
