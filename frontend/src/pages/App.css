@@ -1,8 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 body {
   margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #0f0f0f;
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
   color: #f0f0f0;
+  overflow-x: hidden;
 }
 
 .App {
@@ -10,88 +13,252 @@ body {
   flex-direction: column;
   min-height: 100vh;
   text-align: center;
+  position: relative;
+}
+
+.App::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(0, 230, 118, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 80%, rgba(168, 85, 247, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: -1;
 }
 
 .app-header {
-  background-color: #1a1a2e;
-  padding: 1.5rem 2rem;
-  border-bottom: 2px solid #00e67640;
+  background: rgba(26, 26, 46, 0.95);
+  backdrop-filter: blur(20px);
+  padding: 2rem 2rem;
+  border-bottom: 1px solid rgba(0, 230, 118, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.app-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #00e676, transparent);
 }
 
 .header-content {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
+  gap: 1.5rem;
   flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .logo {
-  width: 60px;
-  height: 60px;
+  width: 70px;
+  height: 70px;
   object-fit: contain;
-  border-radius: 8px;
-  border: 1px solid #00e676;
-  background-color: #121212;
+  border-radius: 16px;
+  border: 2px solid #00e676;
+  background: linear-gradient(135deg, #121212, #1e1e2f);
+  padding: 8px;
+  box-shadow: 0 8px 32px rgba(0, 230, 118, 0.3);
+  transition: all 0.3s ease;
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(2deg); }
+}
+
+.logo:hover {
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 0 12px 40px rgba(0, 230, 118, 0.5);
 }
 
 .app-header h1 {
   margin: 0;
-  font-size: 2.2rem;
-  color: #00e676;
+  font-size: 2.8rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #00e676, #4ade80, #22d3ee);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 30px rgba(0, 230, 118, 0.5);
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from { filter: drop-shadow(0 0 10px rgba(0, 230, 118, 0.5)); }
+  to { filter: drop-shadow(0 0 20px rgba(0, 230, 118, 0.8)); }
 }
 
 .tagline {
-  margin: 0;
-  color: #bbbbbb;
-  font-size: 0.95rem;
+  margin: 0.5rem 0 0 0;
+  color: #cbd5e1;
+  font-size: 1.1rem;
+  font-weight: 400;
+  opacity: 0.9;
+  letter-spacing: 0.5px;
 }
 
 .app-main {
   flex: 1;
-  padding: 2rem 1rem;
+  padding: 3rem 1rem;
+  position: relative;
+  z-index: 1;
 }
 
 .loading {
-  margin-top: 1rem;
+  margin-top: 2rem;
   font-style: italic;
-  color: #ffeb3b;
+  color: #fbbf24;
+  font-size: 1.1rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.loading::before {
+  content: '⚡';
+  font-size: 1.2rem;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 .result {
   margin-top: 2rem;
-  background-color: #1e1e2f;
-  padding: 1.5rem;
-  border-radius: 10px;
-  max-width: 650px;
+  background: rgba(30, 30, 47, 0.95);
+  backdrop-filter: blur(20px);
+  padding: 2rem;
+  border-radius: 20px;
+  max-width: 800px;
   margin-left: auto;
   margin-right: auto;
-  box-shadow: 0 0 10px #00e67660;
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(0, 230, 118, 0.2);
   text-align: left;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.result:hover {
+  transform: translateY(-5px);
+  box-shadow: 
+    0 30px 60px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(0, 230, 118, 0.3);
 }
 
 .result h3 {
   color: #00e676;
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.result h3::before {
+  content: '🔍';
+  font-size: 1.2rem;
 }
 
 .result pre {
-  background-color: #2b2b3a;
-  padding: 1rem;
-  border-radius: 6px;
+  background: linear-gradient(135deg, #1e1e2f, #252540);
+  padding: 1.5rem;
+  border-radius: 12px;
   color: #f8f8f8;
   overflow-x: auto;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  line-height: 1.6;
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 .app-footer {
-  background-color: #1a1a2e;
-  padding: 1rem;
-  color: #888;
-  font-size: 0.9rem;
-  border-top: 2px solid #00e67640;
+  background: rgba(26, 26, 46, 0.95);
+  backdrop-filter: blur(20px);
+  padding: 2rem 1rem;
+  color: #94a3b8;
+  font-size: 0.95rem;
+  border-top: 1px solid rgba(0, 230, 118, 0.2);
+  position: relative;
+}
+
+.app-footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #00e676, transparent);
+}
+
+.app-footer p {
+  margin: 0.3rem 0;
+  font-weight: 500;
 }
 
 .footer-note {
-  font-size: 0.8rem;
-  color: #aaa;
-  margin-top: 0.3rem;
+  font-size: 0.85rem;
+  color: #64748b;
+  margin-top: 0.5rem;
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .app-header h1 {
+    font-size: 2.2rem;
+  }
+  
+  .header-content {
+    gap: 1rem;
+  }
+  
+  .logo {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .app-main {
+    padding: 2rem 1rem;
+  }
+  
+  .tagline {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-header h1 {
+    font-size: 1.8rem;
+  }
+  
+  .app-header {
+    padding: 1.5rem 1rem;
+  }
 }

@@ -1,53 +1,310 @@
-# Getting Started with Create React App
+# 🎨 Silent Scan Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<div align="center">
 
-## Available Scripts
+![React](https://img.shields.io/badge/React-18.x-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![CSS3](https://img.shields.io/badge/CSS3-Modern-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 
-In the project directory, you can run:
+**Modern, responsive frontend for the Silent Scan malware analysis platform built with React and custom CSS animations.**
 
-### `npm start`
+</div>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🚀 Features
 
-### `npm test`
+### 🎯 **User Interface**
+- **Modern Design**: Dark theme with cybersecurity aesthetics
+- **Responsive Layout**: Optimized for desktop, tablet, and mobile
+- **Interactive Animations**: Smooth transitions and hover effects
+- **Drag & Drop**: Intuitive file upload with visual feedback
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 📱 **Components**
+- **Home Page**: Main landing and analysis interface
+- **FileUpload**: Secure file upload with progress tracking
+- **AnalysisResult**: Comprehensive results display
+- **Responsive Tables**: Mobile-friendly data presentation
 
-### `npm run build`
+### 🎨 **Styling Features**
+- **CSS Grid & Flexbox**: Modern layout systems
+- **Custom Animations**: Floating logos, progress bars, glowing effects
+- **Gradient Backgrounds**: Eye-catching visual elements
+- **Lucide Icons**: Professional iconography
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🛠️ Technology Stack
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **React 18**: Modern React with Hooks
+- **Create React App**: Zero-config build setup
+- **Lucide React**: Beautiful icons
+- **Custom CSS**: Hand-crafted animations and responsive design
+- **Modern JavaScript**: ES6+ features
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 📦 Installation & Setup
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Prerequisites
+- Node.js (v16 or higher)
+- npm or yarn package manager
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Quick Start
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```bash
+# Install dependencies
+npm install
 
-## Learn More
+# Start development server
+npm start
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+# Build for production
+npm run build
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+# Run tests
+npm test
+```
 
-### Code Splitting
+### Available Scripts
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+| Script | Description |
+|--------|-------------|
+| `npm start` | Runs the app in development mode on http://localhost:3000 |
+| `npm test` | Launches the test runner in interactive watch mode |
+| `npm run build` | Builds the app for production to the `build` folder |
+| `npm run eject` | ⚠️ One-way operation to expose build configuration |
+
+---
+
+## 📁 Project Structure
+
+```
+frontend/
+├── 📁 public/
+│   ├── 🖼️ favicon.ico
+│   ├── 📄 index.html
+│   ├── 🖼️ logo192.png
+│   ├── 🖼️ logo512.png
+│   ├── 📄 manifest.json
+│   └── 📄 robots.txt
+├── 📁 src/
+│   ├── 📄 App.js              # Main app component
+│   ├── 📄 index.js            # App entry point
+│   ├── 📁 api/
+│   │   └── 📄 upload.js       # API utilities
+│   ├── 📁 components/
+│   │   ├── 📄 AnalysisResult.jsx
+│   │   ├── 📄 FileUpload.jsx
+│   │   └── 📄 Analysis.css
+│   └── 📁 pages/
+│       ├── 📄 Home.jsx
+│       └── 📄 App.css
+└── 📄 package.json
+```
+
+---
+
+## 🎨 Design System
+
+### Color Palette
+```css
+/* Primary Colors */
+--primary-green: #00e676;
+--primary-blue: #3b82f6;
+--primary-cyan: #22d3ee;
+
+/* Background Colors */
+--bg-primary: #0f0f23;
+--bg-secondary: #1a1a2e;
+--bg-card: rgba(30, 30, 47, 0.95);
+
+/* Text Colors */
+--text-primary: #f0f0f0;
+--text-secondary: #cbd5e1;
+--text-accent: #00e676;
+```
+
+### Typography
+- **Primary Font**: Inter (Google Fonts)
+- **Monospace Font**: JetBrains Mono (for code blocks)
+- **Font Weights**: 300, 400, 500, 600, 700
+
+### Animations
+- **Float Animation**: Logo floating effect
+- **Glow Animation**: Text glow effects
+- **Fade In Up**: Card entrance animations
+- **Shimmer Effect**: Progress bar animations
+
+---
+
+## 🔧 Development
+
+### Component Architecture
+- **Functional Components**: Using React Hooks
+- **Props Drilling**: Simple state management
+- **CSS Modules**: Scoped styling
+- **Responsive Design**: Mobile-first approach
+
+### Code Style Guidelines
+```javascript
+// Component naming: PascalCase
+const AnalysisResult = ({ result }) => { ... }
+
+// File naming: PascalCase for components
+AnalysisResult.jsx
+
+// CSS classes: kebab-case
+.analysis-container { ... }
+
+// Functions: camelCase
+const handleFileUpload = () => { ... }
+```
+
+### Adding New Components
+
+1. Create component file in appropriate folder
+2. Import required dependencies
+3. Implement component logic
+4. Add corresponding CSS styles
+5. Export component
+
+Example:
+```jsx
+import React, { useState } from 'react';
+import { IconName } from 'lucide-react';
+import './ComponentName.css';
+
+const ComponentName = ({ props }) => {
+  const [state, setState] = useState(initialValue);
+  
+  return (
+    <div className="component-container">
+      {/* Component JSX */}
+    </div>
+  );
+};
+
+export default ComponentName;
+```
+
+---
+
+## 📱 Responsive Breakpoints
+
+```css
+/* Mobile */
+@media (max-width: 480px) { ... }
+
+/* Tablet */
+@media (max-width: 768px) { ... }
+
+/* Desktop */
+@media (min-width: 769px) { ... }
+```
+
+---
+
+## 🎯 Performance Optimizations
+
+- **Code Splitting**: Dynamic imports for large components
+- **Image Optimization**: Optimized logo and icon assets
+- **CSS Optimization**: Minimal CSS with efficient selectors
+- **Bundle Analysis**: Regular bundle size monitoring
+
+---
+
+## 🔍 Browser Support
+
+| Browser | Version |
+|---------|---------|
+| Chrome | 90+ |
+| Firefox | 88+ |
+| Safari | 14+ |
+| Edge | 90+ |
+
+---
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+**Issue**: App won't start
+```bash
+# Solution: Clear cache and reinstall
+rm -rf node_modules package-lock.json
+npm install
+npm start
+```
+
+**Issue**: Build fails
+```bash
+# Solution: Check for syntax errors and dependencies
+npm run build 2>&1 | grep -i error
+```
+
+**Issue**: Styling not applied
+- Check CSS import statements
+- Verify class name spelling
+- Clear browser cache
+
+---
+
+## 🚀 Deployment
+
+### Vercel (Recommended)
+```bash
+# Install Vercel CLI
+npm i -g vercel
+
+# Deploy
+vercel
+
+# Production deployment
+vercel --prod
+```
+
+### Netlify
+```bash
+# Build the project
+npm run build
+
+# Deploy build folder to Netlify
+# Drag and drop the 'build' folder to Netlify
+```
+
+### Manual Deployment
+```bash
+# Build for production
+npm run build
+
+# Serve build folder with any static server
+npx serve -s build
+```
+
+---
+
+## 📚 Learn More
+
+### React Resources
+- [React Documentation](https://reactjs.org/)
+- [Create React App](https://facebook.github.io/create-react-app/docs/getting-started)
+- [React Hooks Guide](https://reactjs.org/docs/hooks-intro.html)
+
+### CSS Resources
+- [CSS Grid Guide](https://css-tricks.com/snippets/css/complete-guide-grid/)
+- [Flexbox Guide](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
+- [CSS Animations](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Animations)
+
+---
+
+<div align="center">
+
+**🎨 Beautiful UI meets powerful functionality 🎨**
+
+Made with ❤️ and ☕ by [Aditya Kulkarni](https://github.com/Aditya19110)
+
+</div>
 
 ### Analyzing the Bundle Size
 

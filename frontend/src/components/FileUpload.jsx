@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Upload, FileIcon, AlertCircle, CheckCircle2 } from "lucide-react";
 import "./Analysis.css";
 
 const FileUpload = ({ setAnalysisResult, setLoading }) => {
@@ -24,7 +25,7 @@ const FileUpload = ({ setAnalysisResult, setLoading }) => {
     if (droppedFile && droppedFile.name.endsWith(".exe")) {
       setFile(droppedFile);
     } else {
-      alert("Only .exe files are allowed.");
+      alert("⚠️ Only .exe files are allowed for security analysis.");
     }
   };
 
@@ -33,13 +34,13 @@ const FileUpload = ({ setAnalysisResult, setLoading }) => {
     if (selected && selected.name.endsWith(".exe")) {
       setFile(selected);
     } else {
-      alert("Only .exe files are allowed.");
+      alert("⚠️ Only .exe files are allowed for security analysis.");
     }
   };
 
   const handleUpload = async () => {
     if (!file) {
-      alert("Please select a .exe file first!");
+      alert("📁 Please select a .exe file first!");
       return;
     }
 
@@ -99,10 +100,18 @@ const FileUpload = ({ setAnalysisResult, setLoading }) => {
       pollResult();
     } catch (err) {
       console.error("Upload failed:", err);
-      alert("Error uploading or analyzing file: " + (err.message || "Unknown error"));
+      alert("❌ Error uploading or analyzing file: " + (err.message || "Unknown error"));
       setLoading(false);
       setProgress(0);
     }
+  };
+
+  const formatFileSize = (bytes) => {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   };
 
   return (
@@ -114,24 +123,63 @@ const FileUpload = ({ setAnalysisResult, setLoading }) => {
       onDrop={handleDrop}
     >
       <div className="upload-box">
-      <label className="upload-label">
-        <input
-          type="file"
-          accept=".exe"
-          onChange={handleChange}
-          className="file-input"
-        />
-        <p>📂 Drag & Drop your <strong>.exe</strong> file here or <span className="browse-link">click to browse</span>.</p>
-      </label>
-
-      {file && <p className="file-selected">✅ Selected File: {file.name}</p>}
-      <button onClick={handleUpload}>Analyze File</button>
-
-      {progress > 0 && (
-        <div className="progress-bar">
-          <div className="progress-fill" style={{ width: `${progress}%` }}></div>
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
+          <Upload size={48} style={{ color: '#00e676', opacity: 0.8 }} />
         </div>
-      )}
+        
+        <label className="upload-label">
+          <input
+            type="file"
+            accept=".exe"
+            onChange={handleChange}
+            className="file-input"
+          />
+          <p style={{ fontSize: '1.3rem', fontWeight: '500', marginBottom: '0.5rem' }}>
+            � <strong>Secure Malware Analysis</strong>
+          </p>
+          <p>
+            Drag & Drop your <strong>.exe</strong> file here or{" "}
+            <span className="browse-link">click to browse</span>
+          </p>
+          <p style={{ fontSize: '0.9rem', color: '#94a3b8', marginTop: '0.5rem' }}>
+            File will be analyzed safely without execution
+          </p>
+        </label>
+
+        {file && (
+          <div className="file-selected">
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+              <CheckCircle2 size={20} style={{ color: '#00e676' }} />
+              <FileIcon size={20} style={{ color: '#00e676' }} />
+            </div>
+            <p style={{ margin: '0', fontWeight: '600', fontSize: '1.1rem' }}>
+              {file.name}
+            </p>
+            <p style={{ margin: '0.3rem 0 0 0', fontSize: '0.9rem', opacity: '0.8' }}>
+              Size: {formatFileSize(file.size)}
+            </p>
+          </div>
+        )}
+
+        <button onClick={handleUpload} disabled={!file || progress > 0}>
+          {progress > 0 ? (
+            <>
+              <AlertCircle className="icon" style={{ animation: 'spin 1s linear infinite' }} />
+              Analyzing... {progress}%
+            </>
+          ) : (
+            <>
+              <Upload className="icon" />
+              Start Analysis
+            </>
+          )}
+        </button>
+
+        {progress > 0 && (
+          <div className="progress-bar">
+            <div className="progress-fill" style={{ width: `${progress}%` }}></div>
+          </div>
+        )}
       </div>
     </div>
   );
