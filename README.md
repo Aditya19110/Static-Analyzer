@@ -3,15 +3,6 @@
 **Silent Scan** is a static malware analysis web application that allows users to upload `.exe` files and receive a detailed analysis report without executing the file. It computes file hashes and performs static inspection securely.
 
 ---
-
-## 🚀 Project Structure
-SilentScan/
-├── frontend/      # React.js frontend for user interface
-├── backend/       # Flask backend for static analysis
-└── README.md
-
----
-
 ## 📦 Requirements
 
 ### ✅ Backend (Python)
