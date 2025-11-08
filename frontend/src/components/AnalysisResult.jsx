@@ -22,7 +22,7 @@ const AnalysisResult = ({ result }) => {
   return (
     <main className="analysis-wrapper">
       <div className="analysis-container">
-        <h2 className="section-title">🔍 Malware Analysis Report</h2>
+        <h2 className="section-title">Malware Analysis Report</h2>
         <div className="button-row">
           <button onClick={() => window.location.reload()} className="reupload-button">
             <FileText className="icon" /> New Analysis
@@ -122,7 +122,7 @@ const AnalysisResult = ({ result }) => {
           </div>
         )}
 
-        <h2 className="section-title">🛡️ VirusTotal Analysis</h2>
+        <h2 className="section-title">VirusTotal Analysis</h2>
 
         {!vtData && (
           <div className="card">

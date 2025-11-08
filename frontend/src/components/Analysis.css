@@ -1,11 +1,9 @@
-/* ---------- Base Styling ---------- */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 body {
   font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* ---------- Layout ---------- */
 .analysis-wrapper {
   padding: 2rem;
   background: transparent;
@@ -18,7 +16,6 @@ body {
   margin: auto;
 }
 
-/* ---------- Section Title ---------- */
 .section-title {
   font-size: 2.5rem;
   font-weight: 700;
@@ -55,7 +52,6 @@ body {
   border-radius: 2px;
 }
 
-/* ---------- Card ---------- */
 .card {
   background: rgba(30, 30, 47, 0.95);
   backdrop-filter: blur(20px);
@@ -115,7 +111,6 @@ body {
   font-weight: 600;
 }
 
-/* ---------- Results Table ---------- */
 .results-table-wrapper {
   overflow-x: auto;
   border-radius: 12px;
@@ -161,7 +156,6 @@ body {
   border-bottom: none;
 }
 
-/* ---------- Stats List ---------- */
 .stats-list {
   list-style: none;
   padding: 0;
@@ -188,7 +182,6 @@ body {
   transform: translateY(-2px);
 }
 
-/* ---------- Icons ---------- */
 .icon {
   margin-right: 0.8rem;
   width: 20px;
@@ -230,7 +223,6 @@ body {
   font-weight: 600;
 }
 
-/* ---------- Button Styles ---------- */
 .button-row {
   display: flex;
   gap: 1rem;
@@ -278,7 +270,6 @@ body {
   box-shadow: 0 8px 30px rgba(16, 185, 129, 0.5);
 }
 
-/* ---------- File Upload ---------- */
 .file-upload-container {
   border: 2px dashed rgba(0, 230, 118, 0.4);
   background: rgba(30, 30, 47, 0.6);
@@ -376,7 +367,6 @@ body {
   border: 1px solid rgba(0, 230, 118, 0.3);
 }
 
-/* ---------- Upload Button in Upload Box ---------- */
 .upload-box button {
   background: linear-gradient(135deg, #00e676, #10b981);
   color: #000;
@@ -403,7 +393,6 @@ body {
   transform: translateY(0);
 }
 
-/* ---------- Progress Bar ---------- */
 .progress-bar {
   margin-top: 1.5rem;
   height: 8px;
@@ -437,7 +426,6 @@ body {
   100% { transform: translateX(100%); }
 }
 
-/* ---------- Loading Message ---------- */
 .loading-msg {
   text-align: center;
   margin-top: 2rem;

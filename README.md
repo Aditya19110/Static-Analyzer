@@ -1,4 +1,4 @@
-# 🛡️ Silent Scan - Advanced Static Malware Analyzer
+# Silent Scan - Advanced Static Malware Analyzer
 
 <div align="center">
 
@@ -9,15 +9,15 @@
 
 **A cutting-edge static malware analysis platform that provides comprehensive security insights without executing potentially harmful files.**
 
-[🚀 Live Demo](https://static-analyzer.vercel.app) • [📖 Documentation](#features) • [🐛 Report Bug](https://github.com/Aditya19110/Static-Analyzer/issues) • [💡 Request Feature](https://github.com/Aditya19110/Static-Analyzer/issues)
+[Live Demo](https://static-analyzer.vercel.app) | [Documentation](#features) | [Report Bug](https://github.com/Aditya19110/Static-Analyzer/issues) | [Request Feature](https://github.com/Aditya19110/Static-Analyzer/issues)
 
 </div>
 
 ---
 
-## ✨ Features
+## Features
 
-### 🔍 **Comprehensive Static Analysis**
+### Comprehensive Static Analysis
 - **File Hash Generation**: MD5, SHA1, and SHA256 cryptographic hashes
 - **PE Header Inspection**: Entry point, image base, and compilation timestamp analysis
 - **Section Analysis**: Virtual/raw size comparison with entropy calculations
@@ -25,20 +25,20 @@
 - **String Extraction**: Readable strings extraction for behavioral insights
 - **Language Detection**: Programming language identification using heuristics
 
-### 🛡️ **VirusTotal Integration**
+### VirusTotal Integration
 - **Multi-Engine Scanning**: Leverage 70+ antivirus engines
 - **Real-time Results**: Live polling for scan completion
 - **Detailed Reports**: Engine-specific detection results
 - **Statistical Overview**: Malicious, suspicious, and clean verdicts
 
-### 🎨 **Modern UI/UX**
+### Modern UI/UX
 - **Responsive Design**: Optimized for desktop and mobile devices
 - **Drag & Drop Interface**: Intuitive file upload experience
 - **Real-time Progress**: Visual feedback during analysis
 - **Dark Theme**: Professional cybersecurity aesthetic
 - **Interactive Results**: Expandable sections with detailed information
 
-### 🔒 **Security First**
+### Security First
 - **No File Execution**: Safe static analysis only
 - **Secure Upload**: Files processed in isolated environment
 - **Data Privacy**: Temporary file storage with automatic cleanup
@@ -46,7 +46,7 @@
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ```mermaid
 graph TB
@@ -64,7 +64,7 @@ graph TB
     G -->|JSON Response| A
 ```
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### Prerequisites
 
@@ -72,7 +72,7 @@ graph TB
 - **Python** (v3.8 or higher)
 - **VirusTotal API Key** (for enhanced scanning)
 
-### 🔧 Installation
+### Installation
 
 1. **Clone the Repository**
    ```bash
@@ -91,8 +91,9 @@ graph TB
    # Install dependencies
    pip install -r requirements.txt
    
-   # Set environment variables
-   echo "VIRUSTOTAL_API_KEY=your_api_key_here" > .env
+   # Create .env file from example
+   cp .env.example .env
+   # Edit .env and add your VirusTotal API key
    
    # Start the Flask server
    python app.py
@@ -105,6 +106,11 @@ graph TB
    # Install dependencies
    npm install
    
+   # Create .env file from example
+   cp .env.example .env
+   # For local development, use: REACT_APP_API_URL=http://localhost:5000
+   # For production, use your deployed backend URL
+   
    # Start development server
    npm start
    ```
@@ -113,9 +119,23 @@ graph TB
    - Frontend: `http://localhost:3000`
    - Backend API: `http://localhost:5000`
 
+### Deployment Configuration
+
+**Frontend (Vercel):**
+- Set environment variable: `REACT_APP_API_URL=https://your-backend-url.com`
+- Deploy from GitHub repository
+- Vercel will automatically detect React and build
+
+**Backend (Render):**
+- Set environment variables:
+  - `VIRUSTOTAL_API_KEY=your_api_key`
+  - `PORT` (Render sets this automatically)
+- Build command: `pip install -r requirements.txt`
+- Start command: `python app.py`
+
 ---
 
-## 📦 Technology Stack
+##  Technology Stack
 
 ### Frontend
 - **Framework**: React 18 with Hooks
@@ -138,7 +158,7 @@ graph TB
 
 ---
 
-## 🔌 API Endpoints
+##  API Endpoints
 
 ### Static Analysis
 ```http
@@ -175,7 +195,7 @@ GET /api/virustotal/analysis/{analysis_id}
 
 ---
 
-## 🛠️ Development
+## ️ Development
 
 ### Project Structure
 ```
@@ -210,7 +230,7 @@ Static-Analyzer/
 
 ---
 
-## 🔒 Security Considerations
+##  Security Considerations
 
 - **Input Validation**: All file uploads are validated for type and size
 - **Sandboxed Execution**: No files are executed during analysis
@@ -220,7 +240,7 @@ Static-Analyzer/
 
 ---
 
-## 📊 Sample Analysis Report
+##  Sample Analysis Report
 
 <details>
 <summary>Click to expand sample output</summary>
@@ -261,7 +281,7 @@ Static-Analyzer/
 
 ---
 
-## 🤝 Contributing
+##  Contributing
 
 We welcome contributions from the cybersecurity community! Whether you're fixing bugs, adding features, or improving documentation, your help is appreciated.
 
@@ -275,22 +295,22 @@ We welcome contributions from the cybersecurity community! Whether you're fixing
 
 ---
 
-## 📄 License
+##  License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-## 📞 Support & Contact
+##  Support & Contact
 
 <div align="center">
 
-**Made with ❤️ by [Aditya Kulkarni](https://github.com/Aditya19110)**
+**Made by [Aditya Kulkarni](https://github.com/Aditya19110)**
 
 [![GitHub](https://img.shields.io/badge/GitHub-Aditya19110-black?style=for-the-badge&logo=github)](https://github.com/Aditya19110)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?style=for-the-badge&logo=linkedin)](https://linkedin.com/in/aditya-kulkarni)
 [![Email](https://img.shields.io/badge/Email-Contact-red?style=for-the-badge&logo=gmail)](mailto:aditya@example.com)
 
-**🛡️ Stay Protected. Analyze Before You Trust. 🛡️**
+**Stay Protected. Analyze Before You Trust.**
 
 </div>

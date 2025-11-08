@@ -12,7 +12,7 @@
 
 ---
 
-## 🚀 Features
+##  Features
 
 ### 🎯 **User Interface**
 - **Modern Design**: Dark theme with cybersecurity aesthetics
@@ -34,7 +34,7 @@
 
 ---
 
-## 🛠️ Technology Stack
+## ️ Technology Stack
 
 - **React 18**: Modern React with Hooks
 - **Create React App**: Zero-config build setup
@@ -44,7 +44,7 @@
 
 ---
 
-## 📦 Installation & Setup
+##  Installation & Setup
 
 ### Prerequisites
 - Node.js (v16 or higher)
@@ -105,7 +105,7 @@ frontend/
 
 ---
 
-## 🎨 Design System
+##  Design System
 
 ### Color Palette
 ```css
@@ -138,7 +138,7 @@ frontend/
 
 ---
 
-## 🔧 Development
+##  Development
 
 ### Component Architecture
 - **Functional Components**: Using React Hooks
@@ -190,7 +190,7 @@ export default ComponentName;
 
 ---
 
-## 📱 Responsive Breakpoints
+##  Responsive Breakpoints
 
 ```css
 /* Mobile */
@@ -214,7 +214,7 @@ export default ComponentName;
 
 ---
 
-## 🔍 Browser Support
+##  Browser Support
 
 | Browser | Version |
 |---------|---------|
@@ -225,7 +225,7 @@ export default ComponentName;
 
 ---
 
-## 🐛 Troubleshooting
+##  Troubleshooting
 
 ### Common Issues
 
@@ -250,7 +250,7 @@ npm run build 2>&1 | grep -i error
 
 ---
 
-## 🚀 Deployment
+##  Deployment
 
 ### Vercel (Recommended)
 ```bash
@@ -284,7 +284,7 @@ npx serve -s build
 
 ---
 
-## 📚 Learn More
+##  Learn More
 
 ### React Resources
 - [React Documentation](https://reactjs.org/)
@@ -300,9 +300,11 @@ npx serve -s build
 
 <div align="center">
 
-**🎨 Beautiful UI meets powerful functionality 🎨**
+**Beautiful UI meets powerful functionality**
 
-Made with ❤️ and ☕ by [Aditya Kulkarni](https://github.com/Aditya19110)
+Made by [Aditya Kulkarni](https://github.com/Aditya19110)
+
+</div>
 
 </div>
 

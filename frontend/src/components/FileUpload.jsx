@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Upload, FileIcon, AlertCircle, CheckCircle2 } from "lucide-react";
 import "./Analysis.css";
 
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+
 const FileUpload = ({ setAnalysisResult, setLoading }) => {
   const [file, setFile] = useState(null);
   const [dragActive, setDragActive] = useState(false);
@@ -25,7 +27,7 @@ const FileUpload = ({ setAnalysisResult, setLoading }) => {
     if (droppedFile && droppedFile.name.endsWith(".exe")) {
       setFile(droppedFile);
     } else {
-      alert("⚠️ Only .exe files are allowed for security analysis.");
+      alert("Only .exe files are allowed for security analysis.");
     }
   };
 
@@ -34,13 +36,13 @@ const FileUpload = ({ setAnalysisResult, setLoading }) => {
     if (selected && selected.name.endsWith(".exe")) {
       setFile(selected);
     } else {
-      alert("⚠️ Only .exe files are allowed for security analysis.");
+      alert("Only .exe files are allowed for security analysis.");
     }
   };
 
   const handleUpload = async () => {
     if (!file) {
-      alert("📁 Please select a .exe file first!");
+      alert("Please select a .exe file first!");
       return;
     }
 
@@ -51,8 +53,7 @@ const FileUpload = ({ setAnalysisResult, setLoading }) => {
       const formData = new FormData();
       formData.append("file", file);
 
-      // 1️⃣ Static Analysis
-      const uploadRes = await fetch("https://static-analyzer-zh53.onrender.com/upload", {
+      const uploadRes = await fetch(`${API_URL}/upload`, {
         method: "POST",
         body: formData,
       });
@@ -64,8 +65,7 @@ const FileUpload = ({ setAnalysisResult, setLoading }) => {
 
       setProgress(40);
 
-      // 2️⃣ VirusTotal Upload
-      const vtRes = await fetch("https://static-analyzer-zh53.onrender.com/api/virustotal/upload", {
+      const vtRes = await fetch(`${API_URL}/api/virustotal/upload`, {
         method: "POST",
         body: formData,
       });
@@ -78,10 +78,9 @@ const FileUpload = ({ setAnalysisResult, setLoading }) => {
       const analysisId = vtUpload.data.id;
       setProgress(60);
 
-      // 3️⃣ Polling VirusTotal Result
       const pollResult = async () => {
         const analysisRes = await fetch(
-          `https://static-analyzer-zh53.onrender.com/api/virustotal/analysis/${analysisId}`
+          `${API_URL}/api/virustotal/analysis/${analysisId}`
         );
         const analysisData = await analysisRes.json();
 
@@ -100,7 +99,7 @@ const FileUpload = ({ setAnalysisResult, setLoading }) => {
       pollResult();
     } catch (err) {
       console.error("Upload failed:", err);
-      alert("❌ Error uploading or analyzing file: " + (err.message || "Unknown error"));
+      alert("Error uploading or analyzing file: " + (err.message || "Unknown error"));
       setLoading(false);
       setProgress(0);
     }
@@ -135,7 +134,7 @@ const FileUpload = ({ setAnalysisResult, setLoading }) => {
             className="file-input"
           />
           <p style={{ fontSize: '1.3rem', fontWeight: '500', marginBottom: '0.5rem' }}>
-            � <strong>Secure Malware Analysis</strong>
+            <strong>Secure Malware Analysis</strong>
           </p>
           <p>
             Drag & Drop your <strong>.exe</strong> file here or{" "}

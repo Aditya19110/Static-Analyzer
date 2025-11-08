@@ -38,14 +38,13 @@ const Home = () => {
           }}>
             <h1>Silent Scan</h1>
             <p className="tagline">
-              🔍 Analyze .exe files securely using advanced static analysis
+              Analyze .exe files securely using advanced static analysis
             </p>
           </div>
         </div>
       </header>
 
       <main className="app-main">
-        {/* Only show upload if there's no result */}
         {!analysisResult && (
           <div style={{
             opacity: mounted ? 1 : 0,
@@ -61,7 +60,7 @@ const Home = () => {
 
         {loading && (
           <div className="loading">
-            ⚡ Analyzing file, please wait...
+            Analyzing file, please wait...
             <div style={{ 
               marginTop: '1rem', 
               fontSize: '0.9rem', 
@@ -73,7 +72,6 @@ const Home = () => {
           </div>
         )}
 
-        {/* Show detailed result */}
         {analysisResult && !loading && (
           <div style={{
             animation: 'fadeInUp 0.8s ease-out'
@@ -85,12 +83,12 @@ const Home = () => {
 
       <footer className="app-footer">
         <p style={{ margin: '0', fontWeight: '600' }}>
-          🛡️ SilentScan - 2025
+          SilentScan - 2025
         </p>
         <p className="footer-note">
           Stay protected. Analyze before you trust. 
           <span style={{ marginLeft: '0.5rem', opacity: '0.6' }}>
-            • No file execution • Privacy focused • Open source
+            No file execution - Privacy focused - Open source
           </span>
         </p>
       </footer>

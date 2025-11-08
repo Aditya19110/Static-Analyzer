@@ -10,7 +10,13 @@ import re
 
 load_dotenv()
 app = Flask(__name__)
-CORS(app, origins=["https://static-analyzer.vercel.app"])
+
+CORS(app, resources={r"/*": {"origins": [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "https://static-analyzer.vercel.app",
+    "https://static-analyzer-zh53.onrender.com"
+]}})
 
 UPLOAD_FOLDER = "uploads"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -73,11 +79,10 @@ def extract_strings(file_path, min_length=4):
     strings = []
     with open(file_path, "rb") as f:
         data = f.read()
-        # Find all ASCII strings
         pattern = rb'[\x20-\x7E]{' + bytes(str(min_length), 'utf-8') + rb',}'
         found = re.findall(pattern, data)
         strings = [s.decode(errors="ignore") for s in found]
-    return strings[:1000]  # Limit to first 1000 strings to avoid huge payloads
+    return strings[:1000]
 
 def guess_language(file_path):
     try:
@@ -169,4 +174,5 @@ def get_analysis_result(analysis_id):
     return jsonify(response.json())
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=True)
