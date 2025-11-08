@@ -29,6 +29,22 @@ VT_API_URL = "https://www.virustotal.com/api/v3"
 def allowed_file(filename):
     return os.path.splitext(filename)[1].lower() in ALLOWED_EXTENSIONS
 
+def is_valid_pe_file(file_path):
+    """Verify if the file is a valid PE executable"""
+    try:
+        with open(file_path, 'rb') as f:
+            dos_header = f.read(2)
+            if dos_header != b'MZ':
+                return False, "File does not have a valid PE/DOS header (MZ signature missing)"
+        
+        pe = pefile.PE(file_path, fast_load=True)
+        pe.close()
+        return True, "Valid PE file"
+    except pefile.PEFormatError as e:
+        return False, f"Invalid PE file format: {str(e)}"
+    except Exception as e:
+        return False, f"Error validating file: {str(e)}"
+
 def calculate_hashes(file_path):
     md5 = hashlib.md5()
     sha1 = hashlib.sha1()
@@ -45,35 +61,49 @@ def calculate_hashes(file_path):
     }
 
 def get_pe_info(file_path):
-    pe = pefile.PE(file_path)
-    info = {
-        "entry_point": hex(pe.OPTIONAL_HEADER.AddressOfEntryPoint),
-        "image_base": hex(pe.OPTIONAL_HEADER.ImageBase),
-        "compile_time": pe.FILE_HEADER.TimeDateStamp
-    }
-    return info
+    try:
+        pe = pefile.PE(file_path)
+        info = {
+            "entry_point": hex(pe.OPTIONAL_HEADER.AddressOfEntryPoint),
+            "image_base": hex(pe.OPTIONAL_HEADER.ImageBase),
+            "compile_time": pe.FILE_HEADER.TimeDateStamp
+        }
+        pe.close()
+        return info
+    except pefile.PEFormatError as e:
+        raise ValueError(f"Invalid PE file format: {str(e)}")
+    except Exception as e:
+        raise ValueError(f"Error parsing PE file: {str(e)}")
 
 def get_sections_info(file_path):
-    pe = pefile.PE(file_path)
-    sections = []
-    for section in pe.sections:
-        sections.append({
-            "name": section.Name.decode(errors="ignore").strip("\x00"),
-            "virtual_size": hex(section.Misc_VirtualSize),
-            "raw_size": hex(section.SizeOfRawData),
-            "entropy": section.get_entropy()
-        })
-    return sections
+    try:
+        pe = pefile.PE(file_path)
+        sections = []
+        for section in pe.sections:
+            sections.append({
+                "name": section.Name.decode(errors="ignore").strip("\x00"),
+                "virtual_size": hex(section.Misc_VirtualSize),
+                "raw_size": hex(section.SizeOfRawData),
+                "entropy": section.get_entropy()
+            })
+        pe.close()
+        return sections
+    except Exception as e:
+        raise ValueError(f"Error extracting sections: {str(e)}")
 
 def get_imports(file_path):
-    pe = pefile.PE(file_path)
-    imports = []
-    if hasattr(pe, 'DIRECTORY_ENTRY_IMPORT'):
-        for entry in pe.DIRECTORY_ENTRY_IMPORT:
-            dll = entry.dll.decode()
-            funcs = [imp.name.decode() if imp.name else "None" for imp in entry.imports]
-            imports.append({"dll": dll, "functions": funcs})
-    return imports
+    try:
+        pe = pefile.PE(file_path)
+        imports = []
+        if hasattr(pe, 'DIRECTORY_ENTRY_IMPORT'):
+            for entry in pe.DIRECTORY_ENTRY_IMPORT:
+                dll = entry.dll.decode()
+                funcs = [imp.name.decode() if imp.name else "None" for imp in entry.imports]
+                imports.append({"dll": dll, "functions": funcs})
+        pe.close()
+        return imports
+    except Exception as e:
+        raise ValueError(f"Error extracting imports: {str(e)}")
 
 def extract_strings(file_path, min_length=4):
     strings = []
@@ -122,6 +152,15 @@ def upload_file():
     filepath = os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(file.filename))
     file.save(filepath)
 
+    is_valid, validation_message = is_valid_pe_file(filepath)
+    if not is_valid:
+        os.remove(filepath)
+        return jsonify({
+            "error": "Invalid executable file",
+            "details": validation_message,
+            "hint": "Please upload a valid Windows executable (.exe) file. The file must have a proper PE format with MZ header."
+        }), 400
+
     try:
         result = calculate_hashes(filepath)
         pe_info = get_pe_info(filepath)
@@ -140,7 +179,9 @@ def upload_file():
             "extracted_strings": strings
         })
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        if os.path.exists(filepath):
+            os.remove(filepath)
+        return jsonify({"error": f"Error analyzing file: {str(e)}"}), 500
 
 @app.route("/api/virustotal/upload", methods=["POST"])
 def upload_to_virustotal():

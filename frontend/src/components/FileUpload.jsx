@@ -60,7 +60,10 @@ const FileUpload = ({ setAnalysisResult, setLoading }) => {
       const result = await uploadRes.json();
 
       if (uploadRes.status !== 200 || result.error) {
-        throw new Error(result.error || "Static analysis failed");
+        const errorMsg = result.details 
+          ? `${result.error}\n\n${result.details}\n\n${result.hint || ''}`
+          : result.error || "Static analysis failed";
+        throw new Error(errorMsg);
       }
 
       setProgress(40);
