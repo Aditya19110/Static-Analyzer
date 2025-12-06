@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Upload, FileIcon, AlertCircle, CheckCircle2 } from "lucide-react";
-import "./Analysis.css";
+import { Upload, AlertCircle, CheckCircle2 } from "lucide-react";
 
 const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
@@ -60,7 +59,7 @@ const FileUpload = ({ setAnalysisResult, setLoading }) => {
       const result = await uploadRes.json();
 
       if (uploadRes.status !== 200 || result.error) {
-        const errorMsg = result.details 
+        const errorMsg = result.details
           ? `${result.error}\n\n${result.details}\n\n${result.hint || ''}`
           : result.error || "Static analysis failed";
         throw new Error(errorMsg);
@@ -118,68 +117,73 @@ const FileUpload = ({ setAnalysisResult, setLoading }) => {
 
   return (
     <div
-      className={`file-upload-container ${dragActive ? "drag-active" : ""}`}
+      className={`relative border-2 border-dashed rounded-xl p-4 md:p-8 transition-all duration-300 ${dragActive
+          ? "border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20 scale-105"
+          : "border-slate-300 dark:border-slate-600 hover:border-indigo-400 dark:hover:border-indigo-500"
+        }`}
       onDragEnter={handleDrag}
       onDragOver={handleDrag}
       onDragLeave={handleDrag}
       onDrop={handleDrop}
     >
-      <div className="upload-box">
-        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
-          <Upload size={48} style={{ color: '#00e676', opacity: 0.8 }} />
+      <div className="flex flex-col items-center justify-center text-center space-y-4">
+        <div className="bg-indigo-100 dark:bg-indigo-900/30 p-4 rounded-full">
+          <Upload className="w-12 h-12 text-indigo-600 dark:text-indigo-400" />
         </div>
-        
-        <label className="upload-label">
+
+        <label className="cursor-pointer group">
           <input
             type="file"
             accept=".exe"
             onChange={handleChange}
-            className="file-input"
+            className="hidden"
           />
-          <p style={{ fontSize: '1.3rem', fontWeight: '500', marginBottom: '0.5rem' }}>
-            <strong>Secure Malware Analysis</strong>
-          </p>
-          <p>
-            Drag & Drop your <strong>.exe</strong> file here or{" "}
-            <span className="browse-link">click to browse</span>
-          </p>
-          <p style={{ fontSize: '0.9rem', color: '#94a3b8', marginTop: '0.5rem' }}>
-            File will be analyzed safely without execution
-          </p>
+          <div className="space-y-2">
+            <p className="text-xl font-semibold text-slate-800 dark:text-slate-200">
+              Drag & Drop or <span className="text-indigo-600 dark:text-indigo-400 group-hover:underline">Browse</span>
+            </p>
+            <p className="text-sm text-slate-500 dark:text-slate-400">
+              Only .exe files allowed. Files are analyzed securely.
+            </p>
+          </div>
         </label>
 
         {file && (
-          <div className="file-selected">
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
-              <CheckCircle2 size={20} style={{ color: '#00e676' }} />
-              <FileIcon size={20} style={{ color: '#00e676' }} />
+          <div className="flex items-center space-x-3 bg-green-50 dark:bg-green-900/20 px-4 py-2 rounded-lg border border-green-200 dark:border-green-800 mt-4">
+            <CheckCircle2 className="w-5 h-5 text-green-600 dark:text-green-400" />
+            <div className="text-left">
+              <p className="text-sm font-medium text-slate-700 dark:text-slate-200">{file.name}</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400">{formatFileSize(file.size)}</p>
             </div>
-            <p style={{ margin: '0', fontWeight: '600', fontSize: '1.1rem' }}>
-              {file.name}
-            </p>
-            <p style={{ margin: '0.3rem 0 0 0', fontSize: '0.9rem', opacity: '0.8' }}>
-              Size: {formatFileSize(file.size)}
-            </p>
           </div>
         )}
 
-        <button onClick={handleUpload} disabled={!file || progress > 0}>
-          {progress > 0 ? (
-            <>
-              <AlertCircle className="icon" style={{ animation: 'spin 1s linear infinite' }} />
-              Analyzing... {progress}%
-            </>
-          ) : (
-            <>
-              <Upload className="icon" />
-              Start Analysis
-            </>
-          )}
-        </button>
+        <div className="w-full max-w-xs mt-6">
+          <button
+            onClick={handleUpload}
+            disabled={!file || progress > 0}
+            className={`w-full py-3 px-6 rounded-lg font-semibold text-white shadow-lg transition-all duration-300 ${!file || progress > 0
+                ? "bg-slate-400 cursor-not-allowed"
+                : "bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 hover:scale-[1.02] active:scale-[0.98]"
+              }`}
+          >
+            {progress > 0 ? (
+              <span className="flex items-center justify-center gap-2">
+                <AlertCircle className="w-5 h-5 animate-spin" />
+                Analyzing... {progress}%
+              </span>
+            ) : (
+              "Start Security Scan"
+            )}
+          </button>
+        </div>
 
         {progress > 0 && (
-          <div className="progress-bar">
-            <div className="progress-fill" style={{ width: `${progress}%` }}></div>
+          <div className="w-full max-w-xs bg-slate-200 dark:bg-slate-700 rounded-full h-2.5 mt-4 overflow-hidden">
+            <div
+              className="bg-indigo-600 h-2.5 rounded-full transition-all duration-500 ease-out"
+              style={{ width: `${progress}%` }}
+            ></div>
           </div>
         )}
       </div>

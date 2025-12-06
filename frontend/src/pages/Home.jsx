@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import FileUpload from "../components/FileUpload";
 import AnalysisResult from "../components/AnalysisResult";
-import "./App.css";
+import GlassCard from "../components/GlassCard";
 
 const Home = () => {
   const [analysisResult, setAnalysisResult] = useState(null);
@@ -18,80 +18,40 @@ const Home = () => {
   };
 
   return (
-    <div className="App">
-      <header className="app-header">
-        <div className="header-content">
-          <img 
-            src="/logo192.png" 
-            alt="Silent Scan Logo" 
-            className="logo" 
-            style={{
-              opacity: mounted ? 1 : 0,
-              transform: mounted ? 'translateY(0)' : 'translateY(-20px)',
-              transition: 'all 0.8s ease-out'
-            }}
-          />
-          <div style={{
-            opacity: mounted ? 1 : 0,
-            transform: mounted ? 'translateX(0)' : 'translateX(-30px)',
-            transition: 'all 0.8s ease-out 0.2s'
-          }}>
-            <h1>Silent Scan</h1>
-            <p className="tagline">
-              Analyze .exe files securely using advanced static analysis
-            </p>
-          </div>
-        </div>
-      </header>
+    <div className={`transition-all duration-700 ease-out ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+      <div className="text-center mb-12">
+        <h1 className="text-4xl md:text-5xl font-extrabold text-slate-800 dark:text-white mb-4 tracking-tight">
+          Secure <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">Static Analysis</span>
+        </h1>
+        <p className="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
+          Analyze .exe files securely without execution using advanced static analysis and VirusTotal integration.
+        </p>
+      </div>
 
-      <main className="app-main">
-        {!analysisResult && (
-          <div style={{
-            opacity: mounted ? 1 : 0,
-            transform: mounted ? 'translateY(0)' : 'translateY(30px)',
-            transition: 'all 0.8s ease-out 0.4s'
-          }}>
+      <div className="max-w-4xl mx-auto">
+        {!analysisResult && !loading && (
+          <GlassCard className="transition-all hover:shadow-2xl">
             <FileUpload
               setAnalysisResult={setAnalysisResult}
               setLoading={setLoading}
             />
-          </div>
+          </GlassCard>
         )}
 
         {loading && (
-          <div className="loading">
-            Analyzing file, please wait...
-            <div style={{ 
-              marginTop: '1rem', 
-              fontSize: '0.9rem', 
-              opacity: '0.8',
-              animation: 'pulse 2s ease-in-out infinite' 
-            }}>
-              Running static analysis and VirusTotal scan
+          <GlassCard>
+            <div className="flex flex-col items-center justify-center p-12">
+              <div className="w-16 h-16 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mb-4"></div>
+              <h3 className="text-xl font-semibold text-slate-700 dark:text-slate-200">Analyzing file...</h3>
+              <p className="text-slate-500 dark:text-slate-400 mt-2 animate-pulse">Running static analysis and virus scans</p>
             </div>
-          </div>
+          </GlassCard>
         )}
 
         {analysisResult && !loading && (
-          <div style={{
-            animation: 'fadeInUp 0.8s ease-out'
-          }}>
-            <AnalysisResult result={analysisResult} onReset={resetAnalysis} />
-          </div>
+          <AnalysisResult result={analysisResult} onReset={resetAnalysis} />
         )}
-      </main>
-
-      <footer className="app-footer">
-        <p style={{ margin: '0', fontWeight: '600' }}>
-          SilentScan - 2025
-        </p>
-        <p className="footer-note">
-          Stay protected. Analyze before you trust. 
-          <span style={{ marginLeft: '0.5rem', opacity: '0.6' }}>
-            No file execution - Privacy focused - Open source
-          </span>
-        </p>
-      </footer>
+      </div>
     </div>
   );
 };
