@@ -7,6 +7,8 @@ import requests
 from dotenv import load_dotenv
 import pefile
 import re
+import boto3
+import uuid
 
 load_dotenv()
 app = Flask(__name__)
@@ -18,7 +20,8 @@ CORS(app, resources={r"/*": {"origins": [
     "https://static-analyzer-zh53.onrender.com"
 ]}})
 
-UPLOAD_FOLDER = "uploads"
+# Change to /tmp for AWS Lambda compatibility
+UPLOAD_FOLDER = "/tmp"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
@@ -182,6 +185,90 @@ def upload_file():
         if os.path.exists(filepath):
             os.remove(filepath)
         return jsonify({"error": f"Error analyzing file: {str(e)}"}), 500
+
+@app.route("/api/get-upload-url", methods=["POST"])
+def get_upload_url():
+    data = request.json
+    filename = data.get('filename')
+    
+    if not filename or not allowed_file(filename):
+        return jsonify({"error": "Invalid filename or extension. Only .exe allowed."}), 400
+
+    bucket_name = os.environ.get('UPLOAD_BUCKET_NAME')
+    if not bucket_name:
+        return jsonify({"error": "S3 bucket not configured on the server."}), 500
+
+    file_key = f"{uuid.uuid4()}-{secure_filename(filename)}"
+    s3_client = boto3.client('s3')
+    
+    try:
+        presigned_url = s3_client.generate_presigned_url(
+            'put_object',
+            Params={
+                'Bucket': bucket_name,
+                'Key': file_key,
+                'ContentType': 'application/octet-stream'
+            },
+            ExpiresIn=3600
+        )
+        return jsonify({
+            "upload_url": presigned_url,
+            "file_key": file_key
+        })
+    except Exception as e:
+        return jsonify({"error": f"Could not generate upload URL: {str(e)}"}), 500
+
+@app.route("/api/analyze-s3", methods=["POST"])
+def analyze_s3():
+    data = request.json
+    file_key = data.get('file_key')
+    filename = data.get('filename') or file_key
+    
+    if not file_key:
+        return jsonify({"error": "No file_key provided"}), 400
+
+    bucket_name = os.environ.get('UPLOAD_BUCKET_NAME')
+    s3_client = boto3.client('s3')
+    filepath = os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(file_key))
+
+    try:
+        # Download from S3 to Lambda /tmp
+        s3_client.download_file(bucket_name, file_key, filepath)
+        
+        # Delete from S3 right away to save storage costs
+        s3_client.delete_object(Bucket=bucket_name, Key=file_key)
+        
+        is_valid, validation_message = is_valid_pe_file(filepath)
+        if not is_valid:
+            os.remove(filepath)
+            return jsonify({
+                "error": "Invalid executable file",
+                "details": validation_message,
+                "hint": "Please upload a valid Windows executable (.exe) file. The file must have a proper PE format with MZ header."
+            }), 400
+
+        result = calculate_hashes(filepath)
+        pe_info = get_pe_info(filepath)
+        sections = get_sections_info(filepath)
+        imports = get_imports(filepath)
+        strings = extract_strings(filepath)
+        language = guess_language(filepath)
+
+        os.remove(filepath)
+
+        return jsonify({
+            "filename": filename,
+            "hashes": result,
+            "pe_info": pe_info,
+            "sections": sections,
+            "imports": imports,
+            "language_guess": language,
+            "extracted_strings": strings
+        })
+    except Exception as e:
+        if os.path.exists(filepath):
+            os.remove(filepath)
+        return jsonify({"error": f"Error analyzing S3 file: {str(e)}"}), 500
 
 @app.route("/api/virustotal/upload", methods=["POST"])
 def upload_to_virustotal():
